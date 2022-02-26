@@ -1,0 +1,8 @@
+policy_module(mydmesg_00000-init_t-tmpfs_t, 1.0)
+
+gen_require(`
+  type init_t;
+  type tmpfs_t;
+')
+
+allow init_t tmpfs_t:fifo_file { create getattr open read write };

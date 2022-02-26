@@ -1,0 +1,9 @@
+policy_module(mydmesg_00006-lvm_t-default_t, 1.0)
+
+gen_require(`
+  type default_t;
+  type lvm_t;
+')
+
+allow lvm_t default_t:dir search;
+allow lvm_t default_t:file { getattr ioctl open read };

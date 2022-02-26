@@ -1,0 +1,8 @@
+policy_module(mydmesg_00007-mdadm_t-udev_runtime_t, 1.0)
+
+gen_require(`
+  type mdadm_t;
+  type udev_runtime_t;
+')
+
+allow mdadm_t udev_runtime_t:dir getattr;

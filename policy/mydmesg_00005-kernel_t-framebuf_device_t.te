@@ -1,0 +1,8 @@
+policy_module(mydmesg_00005-kernel_t-framebuf_device_t, 1.0)
+
+gen_require(`
+  type framebuf_device_t;
+  type kernel_t;
+')
+
+allow kernel_t framebuf_device_t:chr_file { getattr setattr unlink };

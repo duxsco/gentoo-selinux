@@ -1,0 +1,8 @@
+policy_module(mydmesg_00008-mdadm_t-debugfs_t, 1.0)
+
+gen_require(`
+  type debugfs_t;
+  type mdadm_t;
+')
+
+allow mdadm_t debugfs_t:dir search;

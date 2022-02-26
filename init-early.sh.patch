@@ -1,0 +1,13 @@
+diff --git a/sh/init-early.sh.Linux.in b/sh/init-early.sh.Linux.in
+index f304e92499163d8d6627d82e56a812e986f6e765..a842fb5e511f2d1038ef2f816c388eba14848b2d 100644
+--- a/sh/init-early.sh.Linux.in
++++ b/sh/init-early.sh.Linux.in
+@@ -34,7 +34,7 @@ else
+ fi
+ 
+ # Set the SELinux label on console before everything so we dont lose output
+-[ -x /sbin/restorecon ] && /sbin/restorecon -F /dev/console
++[ -x /sbin/restorecon ] && /sbin/restorecon -rF /dev
+ 
+ # Try and set a font and as early as we can
+ if service_present "$RC_DEFAULTLEVEL" consolefont ||

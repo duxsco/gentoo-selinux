@@ -1,0 +1,8 @@
+policy_module(mydmesg_00009-initrc_t-etc_t, 1.0)
+
+gen_require(`
+  type etc_t;
+  type initrc_t;
+')
+
+allow initrc_t etc_t:lnk_file { create rename unlink };
