@@ -1,0 +1,23 @@
+#----
+#time->Sat Apr 30 05:09:00 2022
+#type=PROCTITLE msg=audit(1651288140.019:21): proctitle=6770672D6167656E74002D2D686F6D65646972002F746D702F67656D61746F2E3876656F3372306E002D2D7573652D7374616E646172642D736F636B6574002D2D6461656D6F6E
+#type=PATH msg=audit(1651288140.019:21): item=0 name="/tmp/gemato.8veo3r0n" inode=12 dev=00:38 mode=040700 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:portage_tmp_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1651288140.019:21): cwd="/"
+#type=SYSCALL msg=audit(1651288140.019:21): arch=c000003e syscall=254 success=no exit=-13 a0=8 a1=55a2cbfc5dd0 a2=4000600 a3=8 items=1 ppid=1 pid=5986 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=1 comm="gpg-agent" exe="/usr/bin/gpg-agent" subj=staff_u:sysadm_r:portage_fetch_t key=(null)
+#type=AVC msg=audit(1651288140.019:21): avc:  denied  { watch } for  pid=5986 comm="gpg-agent" path="/tmp/gemato.8veo3r0n" dev="tmpfs" ino=12 scontext=staff_u:sysadm_r:portage_fetch_t tcontext=staff_u:object_r:portage_tmp_t tclass=dir permissive=0
+#----
+#time->Sat Apr 30 05:09:00 2022
+#type=PROCTITLE msg=audit(1651288140.019:22): proctitle=6770672D6167656E74002D2D686F6D65646972002F746D702F67656D61746F2E3876656F3372306E002D2D7573652D7374616E646172642D736F636B6574002D2D6461656D6F6E
+#type=PATH msg=audit(1651288140.019:22): item=0 name="/tmp/gemato.8veo3r0n" inode=12 dev=00:38 mode=040700 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:portage_tmp_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1651288140.019:22): cwd="/"
+#type=SYSCALL msg=audit(1651288140.019:22): arch=c000003e syscall=254 success=no exit=-13 a0=8 a1=55a2cbfc54a0 a2=400 a3=0 items=1 ppid=1 pid=5986 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=1 comm="gpg-agent" exe="/usr/bin/gpg-agent" subj=staff_u:sysadm_r:portage_fetch_t key=(null)
+#type=AVC msg=audit(1651288140.019:22): avc:  denied  { watch } for  pid=5986 comm="gpg-agent" path="/tmp/gemato.8veo3r0n" dev="tmpfs" ino=12 scontext=staff_u:sysadm_r:portage_fetch_t tcontext=staff_u:object_r:portage_tmp_t tclass=dir permissive=0
+
+policy_module(my_00012_enforcing_ausearch-portage_fetch_t-portage_tmp_t, 1.0)
+
+gen_require(`
+  type portage_fetch_t;
+  type portage_tmp_t;
+')
+
+allow portage_fetch_t portage_tmp_t:dir watch;

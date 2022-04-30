@@ -1,0 +1,12 @@
+#----
+#time->Sat Apr 30 05:05:54 2022
+#type=AVC msg=audit(1651287954.489:21): avc:  denied  { map } for  pid=5984 comm="git" path="/var/db/repos/gentoo/.git/objects/pack/pack-1babe8f84aa6d8a8cafffa1e9ab3579e119b4398.idx" dev="dm-0" ino=307405 scontext=staff_u:sysadm_r:portage_t tcontext=staff_u:object_r:portage_ebuild_t tclass=file permissive=0
+
+policy_module(my_00011_enforcing_ausearch-portage_t-portage_ebuild_t, 1.0)
+
+gen_require(`
+  type portage_ebuild_t;
+  type portage_t;
+')
+
+allow portage_t portage_ebuild_t:file map;
