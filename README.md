@@ -79,7 +79,7 @@ setsebool -P systemd_tmpfiles_manage_all on
 
 Executing `create_policy.sh` resulted in following `ausearch` outputs with non-policy based fixes shows in the following.
 
-### 1. Cronie
+### sys-process/cronie
 
 `ausearch` output:
 
@@ -133,7 +133,7 @@ Restore:
 Relabeled /var/spool/cron/crontabs/root from system_u:object_r:unlabeled_t to system_u:object_r:user_cron_spool_t
 ```
 
-### 2. nftables
+### net-firewall/nftables
 
 `ausearch` output:
 
