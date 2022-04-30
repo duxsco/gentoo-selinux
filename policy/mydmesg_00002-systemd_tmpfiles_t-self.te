@@ -1,8 +1,0 @@
-policy_module(mydmesg_00002-systemd_tmpfiles_t-self, 1.0)
-
-gen_require(`
-  type systemd_tmpfiles_t;
-')
-
-allow systemd_tmpfiles_t self:capability sys_resource;
-allow systemd_tmpfiles_t self:process setrlimit;

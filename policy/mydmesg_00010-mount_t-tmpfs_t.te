@@ -1,8 +1,0 @@
-policy_module(mydmesg_00010-mount_t-tmpfs_t, 1.0)
-
-gen_require(`
-  type mount_t;
-  type tmpfs_t;
-')
-
-allow mount_t tmpfs_t:dir { add_name create };

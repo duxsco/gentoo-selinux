@@ -1,0 +1,10 @@
+#[   20.786046] audit: type=1400 audit(1651266007.879:3): avc:  denied  { getattr } for  pid=4624 comm="hwclock" name="/" dev="proc" ino=1 scontext=system_u:system_r:hwclock_t tcontext=system_u:object_r:proc_t tclass=filesystem permissive=1
+
+policy_module(my_00005_permissive_dmesg-hwclock_t-proc_t, 1.0)
+
+gen_require(`
+  type hwclock_t;
+  type proc_t;
+')
+
+allow hwclock_t proc_t:filesystem getattr;

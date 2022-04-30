@@ -1,0 +1,13 @@
+#[   20.454666] audit: type=1400 audit(1651265211.556:3): avc:  denied  { search } for  pid=4023 comm="checkpath" name="kernel" dev="proc" ino=12088 scontext=system_u:system_r:tmpfiles_t tcontext=system_u:object_r:sysctl_kernel_t tclass=dir permissive=1
+#[   20.455479] audit: type=1400 audit(1651265211.556:4): avc:  denied  { read } for  pid=4023 comm="checkpath" name="cap_last_cap" dev="proc" ino=18042 scontext=system_u:system_r:tmpfiles_t tcontext=system_u:object_r:sysctl_kernel_t tclass=file permissive=1
+#[   20.456412] audit: type=1400 audit(1651265211.556:5): avc:  denied  { open } for  pid=4023 comm="checkpath" path="/proc/sys/kernel/cap_last_cap" dev="proc" ino=18042 scontext=system_u:system_r:tmpfiles_t tcontext=system_u:object_r:sysctl_kernel_t tclass=file permissive=1
+
+policy_module(my_00000_permissive_dmesg-tmpfiles_t-sysctl_kernel_t, 1.0)
+
+gen_require(`
+  type sysctl_kernel_t;
+  type tmpfiles_t;
+')
+
+allow tmpfiles_t sysctl_kernel_t:dir search;
+allow tmpfiles_t sysctl_kernel_t:file { open read };

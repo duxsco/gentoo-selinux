@@ -1,9 +1,0 @@
-policy_module(mydmesg_00001-tmpfiles_t-sysctl_kernel_t, 1.0)
-
-gen_require(`
-  type sysctl_kernel_t;
-  type tmpfiles_t;
-')
-
-allow tmpfiles_t sysctl_kernel_t:dir search;
-allow tmpfiles_t sysctl_kernel_t:file { open read };

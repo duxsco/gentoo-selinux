@@ -1,0 +1,11 @@
+#[   20.560247] audit: type=1400 audit(1651265396.666:3): avc:  denied  { sys_resource } for  pid=4447 comm="systemd-tmpfile" capability=24  scontext=system_u:system_r:systemd_tmpfiles_t tcontext=system_u:system_r:systemd_tmpfiles_t tclass=capability permissive=1
+#[   20.560265] audit: type=1400 audit(1651265396.666:4): avc:  denied  { setrlimit } for  pid=4447 comm="systemd-tmpfile" scontext=system_u:system_r:systemd_tmpfiles_t tcontext=system_u:system_r:systemd_tmpfiles_t tclass=process permissive=1
+
+policy_module(my_00001_permissive_dmesg-systemd_tmpfiles_t-self, 1.0)
+
+gen_require(`
+  type systemd_tmpfiles_t;
+')
+
+allow systemd_tmpfiles_t self:capability sys_resource;
+allow systemd_tmpfiles_t self:process setrlimit;

@@ -1,8 +1,0 @@
-policy_module(mydmesg_00004-hwclock_t-proc_t, 1.0)
-
-gen_require(`
-  type hwclock_t;
-  type proc_t;
-')
-
-allow hwclock_t proc_t:filesystem getattr;

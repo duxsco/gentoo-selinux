@@ -1,8 +1,0 @@
-policy_module(mydmesg_00003-initrc_t-nsfs_t, 1.0)
-
-gen_require(`
-  type initrc_t;
-  type nsfs_t;
-')
-
-allow initrc_t nsfs_t:file getattr;
