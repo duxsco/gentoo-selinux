@@ -42,9 +42,7 @@ The OpenRC patch was suggested as a possible solution by [perfinion](https://git
 
 ## Creating SELinux policies
 
-The policies in the "policy" folder "fix" denials that occur before the `auditd` service starts. As `ausearch` cannot be used in this case, `dmesg` logs need to be checked and suitable policies based on the scarce information created. **I don't like this approach. Suggestions to fix the root cause are welcome.**
-
-I created a script to simplify policy creation for denials printed out by `dmesg`. Reboot after `semodule -i ...` and create the next SELinux policy. The script creates the `.te` file in the current directory!
+I created a script to simplify policy creation for denials printed out by `dmesg` and `ausearch`. Reboot after `semodule -i ...` and create the next SELinux policy. The script creates the `.te` file in the current directory!
 
 ```bash
 ➤ bash ../create_policy.sh
@@ -70,18 +68,16 @@ allow systemd_tmpfiles_t portage_cache_t:dir { getattr open read relabelfrom rel
 Aborting...
 ```
 
-## Fixes for denials in dmesg
-
-The policies created by `create_policy.sh` are in the policy folder. In addition to building and installing them, enabled following booleans:
+The policies created with `create_policy.sh` are in the "policy" folder. In addition to building and installing them, enable following booleans:
 
 ```bash
 setsebool -P allow_mount_anyfile on
 setsebool -P systemd_tmpfiles_manage_all on
 ```
 
-## Fixes in denials printed by ausearch
+## Non-policy based fixes
 
-Executing `create_policy.sh` resulted in following `ausearch` outputs.
+Executing `create_policy.sh` resulted in following `ausearch` outputs with non-policy based fixes shows in the following.
 
 ### 1. Cronie
 
