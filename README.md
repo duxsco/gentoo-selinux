@@ -16,6 +16,61 @@ SELinux Port Type              Proto    Port Number
 ssh_port_t                     tcp      50022, 22
 ```
 
+## GnuPG context assignment
+
+Files in `/boot` and `/efi*` required for booting need to be GnuPG signed (expect for Secure Boot signed EFI binary). For SELinux not to complain, the GnuPG homedir is stored in `/etc/gentoo-installation/gnupg`. In the following, a suitable file context is assigned:
+
+```bash
+➤ semanage fcontext -l | grep "\\\.gnupg"
+/home/[^/]+/\.gnupg(/.+)?           all files  user_u:object_r:gpg_secret_t
+/home/[^/]+/\.gnupg/S\.gpg-agent.*  socket     user_u:object_r:gpg_agent_tmp_t
+/home/[^/]+/\.gnupg/S\.scdaemon     socket     user_u:object_r:gpg_agent_tmp_t
+/home/[^/]+/\.gnupg/crls\.d(/.+)?   all files  user_u:object_r:dirmngr_home_t
+/home/[^/]+/\.gnupg/log-socket      socket     user_u:object_r:gpg_agent_tmp_t
+/home/david/\.gnupg(/.+)?           all files  staff_u:object_r:gpg_secret_t
+/home/david/\.gnupg/S\.gpg-agent.*  socket     staff_u:object_r:gpg_agent_tmp_t
+/home/david/\.gnupg/S\.scdaemon     socket     staff_u:object_r:gpg_agent_tmp_t
+/home/david/\.gnupg/crls\.d(/.+)?   all files  staff_u:object_r:dirmngr_home_t
+/home/david/\.gnupg/log-socket      socket     staff_u:object_r:gpg_agent_tmp_t
+/root/\.gnupg(/.+)?                 all files  root:object_r:gpg_secret_t
+/root/\.gnupg/S\.gpg-agent.*        socket     root:object_r:gpg_agent_tmp_t
+/root/\.gnupg/S\.scdaemon           socket     root:object_r:gpg_agent_tmp_t
+/root/\.gnupg/crls\.d(/.+)?         all files  root:object_r:dirmngr_home_t
+/root/\.gnupg/log-socket            socket     root:object_r:gpg_agent_tmp_t
+```
+
+Execute the following in a bash shell:
+
+```bash
+semanage fcontext -l | grep "^/root/\\\.gnupg" | while read -r I; do
+    MYCONTEXT="$(awk -F":" '{print $NF}' <<<"${I}")"
+    MYPATH="$(awk '{print $1}' <<<"${I}" | sed 's|root/\\\.gnupg|etc/gentoo-installation/gnupg|')"
+    if [[ $(awk '{print $2}' <<<"${I}") == socket ]]; then
+        MYTYPE="s"
+    else
+        MYTYPE="a"
+    fi
+    semanage fcontext -a -f "${MYTYPE}" -s staff_u -r object_r -t "${MYCONTEXT}" "${MYPATH}"
+done
+```
+
+Result:
+
+```bash
+➤ semanage fcontext -l | grep "^/etc/gentoo-installation/gnupg"
+/etc/gentoo-installation/gnupg(/.+)?           all files  staff_u:object_r:gpg_secret_t
+/etc/gentoo-installation/gnupg/S\.gpg-agent.*  socket     staff_u:object_r:gpg_agent_tmp_t
+/etc/gentoo-installation/gnupg/S\.scdaemon     socket     staff_u:object_r:gpg_agent_tmp_t
+/etc/gentoo-installation/gnupg/crls\.d(/.+)?   all files  staff_u:object_r:dirmngr_home_t
+/etc/gentoo-installation/gnupg/log-socket      socket     staff_u:object_r:gpg_agent_tmp_t
+```
+
+Restore:
+
+```bash
+restorecon -RFv /etc/gentoo-installation/
+```
+
 ## OpenRC patch
 
 The OpenRC patch was suggested as a possible solution by [perfinion](https://github.com/perfinion) to fix bootup. Thx for that 🙂 Save the patch:
