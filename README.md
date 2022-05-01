@@ -123,7 +123,7 @@ List file context mapping definitions:
 Modify:
 
 ```bash
-➤ semanage fcontext -m -f f -t user_cron_spool_t "/var/spool/cron/crontabs/.*"
+➤ semanage fcontext -m -f f -s system_u -r object_r -t user_cron_spool_t "/var/spool/cron/crontabs/.*"
 ```
 
 Restore:
@@ -177,7 +177,7 @@ allow iptables_t initrc_tmp_t:file { append getattr ioctl lock open read write }
 Modify:
 
 ```bash
-semanage fcontext -a -t initrc_tmp_t "/var/lib/nftables(/.*)?"
+semanage fcontext -a -s system_u -r object_r -t initrc_tmp_t "/var/lib/nftables(/.*)?"
 ```
 
 Restore:
