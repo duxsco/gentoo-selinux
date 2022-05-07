@@ -1,0 +1,13 @@
+#----
+#time->Fri May  6 00:19:18 2022
+#type=PROCTITLE msg=audit(1651789158.363:20): proctitle=736F7274002D56
+#type=SYSCALL msg=audit(1651789158.363:20): arch=c000003e syscall=204 success=yes exit=64 a0=0 a1=80 a2=7fff982c74f0 a3=7087a3045d4f18b1 items=0 ppid=6699 pid=6702 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts0 ses=1 comm="sort" exe="/bin/sort" subj=staff_u:sysadm_r:bootloader_t key=(null)
+#type=AVC msg=audit(1651789158.363:20): avc:  denied  { getsched } for  pid=6702 comm="sort" scontext=staff_u:sysadm_r:bootloader_t tcontext=staff_u:sysadm_r:bootloader_t tclass=process permissive=1
+
+policy_module(my_00017_permissive_ausearch-bootloader_t-self, 1.0)
+
+gen_require(`
+  type bootloader_t;
+')
+
+allow bootloader_t self:process getsched;

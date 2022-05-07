@@ -42,6 +42,7 @@ Files in `/boot` and `/efi*` required for booting need to be GnuPG signed (expec
 Execute the following in a bash shell:
 
 ```bash
+semanage fcontext -a -s staff_u -r object_r -t user_home_dir_t -f d /root
 semanage fcontext -l | grep "^/root/\\\.gnupg" | while read -r I; do
     MYCONTEXT="$(awk -F":" '{print $NF}' <<<"${I}")"
     MYPATH="$(awk '{print $1}' <<<"${I}" | sed 's|root/\\\.gnupg|etc/gentoo-installation/gnupg|')"
@@ -50,6 +51,7 @@ semanage fcontext -l | grep "^/root/\\\.gnupg" | while read -r I; do
     else
         MYTYPE="a"
     fi
+    semanage fcontext -a -f "${MYTYPE}" -s staff_u -r object_r -t "${MYCONTEXT}" "${I}"
     semanage fcontext -a -f "${MYTYPE}" -s staff_u -r object_r -t "${MYCONTEXT}" "${MYPATH}"
 done
 ```
@@ -57,12 +59,27 @@ done
 Result:
 
 ```bash
-➤ semanage fcontext -l | grep "^/etc/gentoo-installation/gnupg"
+➤ semanage fcontext -l | grep -e "\\\.gnupg" -e "/etc/gentoo-installation/gnupg"
 /etc/gentoo-installation/gnupg(/.+)?           all files  staff_u:object_r:gpg_secret_t
 /etc/gentoo-installation/gnupg/S\.gpg-agent.*  socket     staff_u:object_r:gpg_agent_tmp_t
 /etc/gentoo-installation/gnupg/S\.scdaemon     socket     staff_u:object_r:gpg_agent_tmp_t
 /etc/gentoo-installation/gnupg/crls\.d(/.+)?   all files  staff_u:object_r:dirmngr_home_t
 /etc/gentoo-installation/gnupg/log-socket      socket     staff_u:object_r:gpg_agent_tmp_t
+/home/[^/]+/\.gnupg(/.+)?                      all files  user_u:object_r:gpg_secret_t
+/home/[^/]+/\.gnupg/S\.gpg-agent.*             socket     user_u:object_r:gpg_agent_tmp_t
+/home/[^/]+/\.gnupg/S\.scdaemon                socket     user_u:object_r:gpg_agent_tmp_t
+/home/[^/]+/\.gnupg/crls\.d(/.+)?              all files  user_u:object_r:dirmngr_home_t
+/home/[^/]+/\.gnupg/log-socket                 socket     user_u:object_r:gpg_agent_tmp_t
+/home/david/\.gnupg(/.+)?                      all files  staff_u:object_r:gpg_secret_t
+/home/david/\.gnupg/S\.gpg-agent.*             socket     staff_u:object_r:gpg_agent_tmp_t
+/home/david/\.gnupg/S\.scdaemon                socket     staff_u:object_r:gpg_agent_tmp_t
+/home/david/\.gnupg/crls\.d(/.+)?              all files  staff_u:object_r:dirmngr_home_t
+/home/david/\.gnupg/log-socket                 socket     staff_u:object_r:gpg_agent_tmp_t
+/root/\.gnupg(/.+)?                            all files  staff_u:object_r:gpg_secret_t
+/root/\.gnupg/S\.gpg-agent.*                   socket     staff_u:object_r:gpg_agent_tmp_t
+/root/\.gnupg/S\.scdaemon                      socket     staff_u:object_r:gpg_agent_tmp_t
+/root/\.gnupg/crls\.d(/.+)?                    all files  staff_u:object_r:dirmngr_home_t
+/root/\.gnupg/log-socket                       socket     staff_u:object_r:gpg_agent_tmp_t
 ```
 
 Restore:
@@ -128,6 +145,8 @@ The policies created with `create_policy.sh` are in the "policy" folder. In addi
 ```bash
 setsebool -P allow_mount_anyfile on
 setsebool -P systemd_tmpfiles_manage_all on
+setsebool -P gpg_read_all_user_content on
+setsebool -P gpg_manage_all_user_content on
 ```
 
 ## Non-policy based fixes

@@ -1,0 +1,16 @@
+#----
+#time->Fri May  6 00:36:37 2022
+#type=PROCTITLE msg=audit(1651790197.673:20): proctitle=63727970747365747570006C756B73436C6F736500626F6F743331343135393236353374656D70
+#type=PATH msg=audit(1651790197.673:20): item=0 name="/sys/fs/cgroup/dm-4" nametype=UNKNOWN cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1651790197.673:20): cwd="/tmp"
+#type=SYSCALL msg=audit(1651790197.673:20): arch=c000003e syscall=262 success=no exit=-2 a0=ffffff9c a1=7ffe37d74fe0 a2=7ffe37d73f50 a3=0 items=1 ppid=5958 pid=7041 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts0 ses=1 comm="cryptsetup" exe="/sbin/cryptsetup" subj=staff_u:sysadm_r:lvm_t key=(null)
+#type=AVC msg=audit(1651790197.673:20): avc:  denied  { search } for  pid=7041 comm="cryptsetup" name="/" dev="tmpfs" ino=1 scontext=staff_u:sysadm_r:lvm_t tcontext=system_u:object_r:cgroup_t tclass=dir permissive=1
+
+policy_module(my_00018_permissive_ausearch-lvm_t-cgroup_t, 1.0)
+
+gen_require(`
+  type cgroup_t;
+  type lvm_t;
+')
+
+allow lvm_t cgroup_t:dir search;

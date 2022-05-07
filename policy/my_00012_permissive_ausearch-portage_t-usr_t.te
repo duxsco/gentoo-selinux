@@ -1,0 +1,20 @@
+#----
+#time->Wed May  4 23:58:35 2022
+#type=PROCTITLE msg=audit(1651701515.573:19): proctitle=2F62696E2F62617368002F7573722F73686172652F67656E6B65726E656C2F67656E5F776F726B65722E736800756E7061636B
+#type=PATH msg=audit(1651701515.573:19): item=2 name="/lib64/ld-linux-x86-64.so.2" inode=63378 dev=00:1c mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:ld_so_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=PATH msg=audit(1651701515.573:19): item=1 name="/bin/bash" inode=97057 dev=00:1c mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:shell_exec_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=PATH msg=audit(1651701515.573:19): item=0 name="/usr/share/genkernel/gen_worker.sh" inode=9081065 dev=00:1c mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:usr_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1651701515.573:19): cwd="/var/tmp/genkernel/gk_pLAUuYWW"
+#type=EXECVE msg=audit(1651701515.573:19): argc=3 a0="/bin/bash" a1="/usr/share/genkernel/gen_worker.sh" a2="unpack"
+#type=SYSCALL msg=audit(1651701515.573:19): arch=c000003e syscall=59 success=yes exit=0 a0=5563dcc85df0 a1=5563dcc85f10 a2=5563dcc85a60 a3=7f9a6077d008 items=3 ppid=17744 pid=17745 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts1 ses=1 comm="gen_worker.sh" exe="/bin/bash" subj=staff_u:sysadm_r:portage_t key=(null)
+#type=AVC msg=audit(1651701515.573:19): avc:  denied  { execute_no_trans } for  pid=17745 comm="sandbox" path="/usr/share/genkernel/gen_worker.sh" dev="dm-0" ino=9081065 scontext=staff_u:sysadm_r:portage_t tcontext=system_u:object_r:usr_t tclass=file permissive=1
+#type=AVC msg=audit(1651701515.573:19): avc:  denied  { execute } for  pid=17745 comm="sandbox" name="gen_worker.sh" dev="dm-0" ino=9081065 scontext=staff_u:sysadm_r:portage_t tcontext=system_u:object_r:usr_t tclass=file permissive=1
+
+policy_module(my_00012_permissive_ausearch-portage_t-usr_t, 1.0)
+
+gen_require(`
+  type portage_t;
+  type usr_t;
+')
+
+allow portage_t usr_t:file { execute execute_no_trans };

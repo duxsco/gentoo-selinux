@@ -1,0 +1,84 @@
+#----
+#time->Thu May  5 01:30:46 2022
+#type=PROCTITLE msg=audit(1651707046.906:20): proctitle=6C64636F6E666967002D66002F6574632F6C642E736F2E636F6E66002D72002F7661722F746D702F67656E6B65726E656C2F676B5F786361587158507A2F696E697472616D66732D66696E616C
+#type=PATH msg=audit(1651707046.906:20): item=0 name="/var/tmp/genkernel/gk_xcaXqXPz/initramfs-final" inode=852 dev=00:3a mode=040755 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1651707046.906:20): cwd="/"
+#type=SYSCALL msg=audit(1651707046.906:20): arch=c000003e syscall=161 success=yes exit=0 a0=7ffc452157e4 a1=0 a2=4d028b a3=59bfdc7d933c8a15 items=1 ppid=6172 pid=22794 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts1 ses=1 comm="ldconfig" exe="/sbin/ldconfig" subj=staff_u:sysadm_r:ldconfig_t key=(null)
+#type=AVC msg=audit(1651707046.906:20): avc:  denied  { search } for  pid=22794 comm="ldconfig" name="gk_xcaXqXPz" dev="tmpfs" ino=2 scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=dir permissive=1
+#----
+#time->Thu May  5 01:52:19 2022
+#type=PROCTITLE msg=audit(1651708339.689:20): proctitle=6C64636F6E666967002D66002F6574632F6C642E736F2E636F6E66002D72002F7661722F746D702F67656E6B65726E656C2F676B5F4B787055534463562F696E697472616D66732D66696E616C
+#type=PATH msg=audit(1651708339.689:20): item=0 name="/etc/ld.so.conf" inode=887 dev=00:3a mode=0100644 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1651708339.689:20): cwd="/"
+#type=SYSCALL msg=audit(1651708339.689:20): arch=c000003e syscall=257 success=yes exit=3 a0=ffffff9c a1=7ffc6465b7dc a2=0 a3=0 items=1 ppid=6187 pid=22834 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts1 ses=1 comm="ldconfig" exe="/sbin/ldconfig" subj=staff_u:sysadm_r:ldconfig_t key=(null)
+#type=AVC msg=audit(1651708339.689:20): avc:  denied  { open } for  pid=22834 comm="ldconfig" path="/etc/ld.so.conf" dev="tmpfs" ino=887 scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=file permissive=1
+#type=AVC msg=audit(1651708339.689:20): avc:  denied  { read } for  pid=22834 comm="ldconfig" name="ld.so.conf" dev="tmpfs" ino=887 scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=file permissive=1
+#----
+#time->Thu May  5 01:52:19 2022
+#type=PROCTITLE msg=audit(1651708339.689:21): proctitle=6C64636F6E666967002D66002F6574632F6C642E736F2E636F6E66002D72002F7661722F746D702F67656E6B65726E656C2F676B5F4B787055534463562F696E697472616D66732D66696E616C
+#type=PATH msg=audit(1651708339.689:21): item=0 name="" inode=887 dev=00:3a mode=0100644 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1651708339.689:21): cwd="/"
+#type=SYSCALL msg=audit(1651708339.689:21): arch=c000003e syscall=262 success=yes exit=0 a0=3 a1=4e5bcd a2=7ffc64659b20 a3=1000 items=1 ppid=6187 pid=22834 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts1 ses=1 comm="ldconfig" exe="/sbin/ldconfig" subj=staff_u:sysadm_r:ldconfig_t key=(null)
+#type=AVC msg=audit(1651708339.689:21): avc:  denied  { getattr } for  pid=22834 comm="ldconfig" path="/etc/ld.so.conf" dev="tmpfs" ino=887 scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=file permissive=1
+#----
+#time->Thu May  5 01:52:19 2022
+#type=PROCTITLE msg=audit(1651708339.689:22): proctitle=6C64636F6E666967002D66002F6574632F6C642E736F2E636F6E66002D72002F7661722F746D702F67656E6B65726E656C2F676B5F4B787055534463562F696E697472616D66732D66696E616C
+#type=PATH msg=audit(1651708339.689:22): item=0 name="/lib" inode=877 dev=00:3a mode=040755 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1651708339.689:22): cwd="/"
+#type=SYSCALL msg=audit(1651708339.689:22): arch=c000003e syscall=262 success=yes exit=0 a0=ffffff9c a1=84ad50 a2=7ffc64659b40 a3=0 items=1 ppid=6187 pid=22834 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts1 ses=1 comm="ldconfig" exe="/sbin/ldconfig" subj=staff_u:sysadm_r:ldconfig_t key=(null)
+#type=AVC msg=audit(1651708339.689:22): avc:  denied  { getattr } for  pid=22834 comm="ldconfig" path="/lib" dev="tmpfs" ino=877 scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=dir permissive=1
+#----
+#time->Thu May  5 01:52:19 2022
+#type=PROCTITLE msg=audit(1651708339.689:23): proctitle=6C64636F6E666967002D66002F6574632F6C642E736F2E636F6E66002D72002F7661722F746D702F67656E6B65726E656C2F676B5F4B787055534463562F696E697472616D66732D66696E616C
+#type=PATH msg=audit(1651708339.689:23): item=0 name="/lib64" inode=877 dev=00:3a mode=040755 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1651708339.689:23): cwd="/"
+#type=SYSCALL msg=audit(1651708339.689:23): arch=c000003e syscall=262 success=yes exit=0 a0=ffffff9c a1=849ca0 a2=7ffc64659bb0 a3=0 items=1 ppid=6187 pid=22834 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts1 ses=1 comm="ldconfig" exe="/sbin/ldconfig" subj=staff_u:sysadm_r:ldconfig_t key=(null)
+#type=AVC msg=audit(1651708339.689:23): avc:  denied  { read } for  pid=22834 comm="ldconfig" name="lib64" dev="tmpfs" ino=854 scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=lnk_file permissive=1
+#----
+#time->Thu May  5 01:52:19 2022
+#type=PROCTITLE msg=audit(1651708339.689:24): proctitle=6C64636F6E666967002D66002F6574632F6C642E736F2E636F6E66002D72002F7661722F746D702F67656E6B65726E656C2F676B5F4B787055534463562F696E697472616D66732D66696E616C
+#type=PATH msg=audit(1651708339.689:24): item=0 name="/lib" inode=877 dev=00:3a mode=040755 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1651708339.689:24): cwd="/"
+#type=SYSCALL msg=audit(1651708339.689:24): arch=c000003e syscall=257 success=yes exit=3 a0=ffffff9c a1=84ad50 a2=90800 a3=0 items=1 ppid=6187 pid=22834 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts1 ses=1 comm="ldconfig" exe="/sbin/ldconfig" subj=staff_u:sysadm_r:ldconfig_t key=(null)
+#type=AVC msg=audit(1651708339.689:24): avc:  denied  { open } for  pid=22834 comm="ldconfig" path="/lib" dev="tmpfs" ino=877 scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=dir permissive=1
+#type=AVC msg=audit(1651708339.689:24): avc:  denied  { read } for  pid=22834 comm="ldconfig" name="lib" dev="tmpfs" ino=877 scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=dir permissive=1
+#----
+#time->Thu May  5 01:52:19 2022
+#type=PROCTITLE msg=audit(1651708339.689:25): proctitle=6C64636F6E666967002D66002F6574632F6C642E736F2E636F6E66002D72002F7661722F746D702F67656E6B65726E656C2F676B5F4B787055534463562F696E697472616D66732D66696E616C
+#type=PATH msg=audit(1651708339.689:25): item=1 name="/etc/ld.so.cache~" inode=1444 dev=00:3a mode=0100600 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t nametype=CREATE cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=PATH msg=audit(1651708339.689:25): item=0 name="/etc/" inode=882 dev=00:3a mode=040755 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t nametype=PARENT cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1651708339.689:25): cwd="/"
+#type=SYSCALL msg=audit(1651708339.689:25): arch=c000003e syscall=257 success=yes exit=3 a0=ffffff9c a1=84ad50 a2=20241 a3=180 items=2 ppid=6187 pid=22834 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts1 ses=1 comm="ldconfig" exe="/sbin/ldconfig" subj=staff_u:sysadm_r:ldconfig_t key=(null)
+#type=AVC msg=audit(1651708339.689:25): avc:  denied  { write } for  pid=22834 comm="ldconfig" path="/etc/ld.so.cache~" dev="tmpfs" ino=1444 scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=file permissive=1
+#type=AVC msg=audit(1651708339.689:25): avc:  denied  { create } for  pid=22834 comm="ldconfig" name="ld.so.cache~" scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=file permissive=1
+#type=AVC msg=audit(1651708339.689:25): avc:  denied  { add_name } for  pid=22834 comm="ldconfig" name="ld.so.cache~" scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=dir permissive=1
+#type=AVC msg=audit(1651708339.689:25): avc:  denied  { write } for  pid=22834 comm="ldconfig" name="etc" dev="tmpfs" ino=882 scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=dir permissive=1
+#----
+#time->Thu May  5 01:52:19 2022
+#type=PROCTITLE msg=audit(1651708339.689:26): proctitle=6C64636F6E666967002D66002F6574632F6C642E736F2E636F6E66002D72002F7661722F746D702F67656E6B65726E656C2F676B5F4B787055534463562F696E697472616D66732D66696E616C
+#type=PATH msg=audit(1651708339.689:26): item=0 name="/etc/ld.so.cache~" inode=1444 dev=00:3a mode=0100600 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1651708339.689:26): cwd="/"
+#type=SYSCALL msg=audit(1651708339.689:26): arch=c000003e syscall=90 success=yes exit=0 a0=84ad50 a1=1a4 a2=84a a3=7057774e3202ebcd items=1 ppid=6187 pid=22834 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts1 ses=1 comm="ldconfig" exe="/sbin/ldconfig" subj=staff_u:sysadm_r:ldconfig_t key=(null)
+#type=AVC msg=audit(1651708339.689:26): avc:  denied  { setattr } for  pid=22834 comm="ldconfig" name="ld.so.cache~" dev="tmpfs" ino=1444 scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=file permissive=1
+#----
+#time->Thu May  5 01:52:19 2022
+#type=PROCTITLE msg=audit(1651708339.689:27): proctitle=6C64636F6E666967002D66002F6574632F6C642E736F2E636F6E66002D72002F7661722F746D702F67656E6B65726E656C2F676B5F4B787055534463562F696E697472616D66732D66696E616C
+#type=PATH msg=audit(1651708339.689:27): item=3 name="/etc/ld.so.cache" inode=1444 dev=00:3a mode=0100644 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t nametype=CREATE cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=PATH msg=audit(1651708339.689:27): item=2 name="/etc/ld.so.cache~" inode=1444 dev=00:3a mode=0100644 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t nametype=DELETE cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=PATH msg=audit(1651708339.689:27): item=1 name="/etc/" inode=882 dev=00:3a mode=040755 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t nametype=PARENT cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=PATH msg=audit(1651708339.689:27): item=0 name="/etc/" inode=882 dev=00:3a mode=040755 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t nametype=PARENT cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1651708339.689:27): cwd="/"
+#type=SYSCALL msg=audit(1651708339.689:27): arch=c000003e syscall=82 success=yes exit=0 a0=84ad50 a1=7ffc64659d20 a2=84a a3=7057774e3202ebcd items=4 ppid=6187 pid=22834 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts1 ses=1 comm="ldconfig" exe="/sbin/ldconfig" subj=staff_u:sysadm_r:ldconfig_t key=(null)
+#type=AVC msg=audit(1651708339.689:27): avc:  denied  { rename } for  pid=22834 comm="ldconfig" name="ld.so.cache~" dev="tmpfs" ino=1444 scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=file permissive=1
+#type=AVC msg=audit(1651708339.689:27): avc:  denied  { remove_name } for  pid=22834 comm="ldconfig" name="ld.so.cache~" dev="tmpfs" ino=1444 scontext=staff_u:sysadm_r:ldconfig_t tcontext=staff_u:object_r:user_tmpfs_t tclass=dir permissive=1
+
+policy_module(my_00015_permissive_ausearch-ldconfig_t-user_tmpfs_t, 1.0)
+
+gen_require(`
+  type ldconfig_t;
+  type user_tmpfs_t;
+')
+
+allow ldconfig_t user_tmpfs_t:dir { add_name getattr open read remove_name search write };
+allow ldconfig_t user_tmpfs_t:file { create getattr open read rename setattr write };
+allow ldconfig_t user_tmpfs_t:lnk_file read;
