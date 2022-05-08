@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Prevent tainting variables via environment
+# See: https://gist.github.com/duxsco/fad211d5828e09d0391f018834f955c9
+unset audit2allow audit2allow_allow ausearch_context ausearch_denials denials_relevant dmesg_context dmesg_denials index log_source output selinux_mode selinux_type
+
 if grep -q -E "^\[.*\][[:space:]]+audit:[[:space:]]+type=1404[[:space:]]+.*[[:space:]]+enforcing=1[[:space:]]+" < <(dmesg); then
 	selinux_mode="enforcing"
 else
