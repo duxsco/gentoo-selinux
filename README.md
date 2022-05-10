@@ -2,6 +2,63 @@
 
 Here, SELinux related changes applied to my [custom Gentoo Linux installation](https://github.com/duxsco/gentoo-installation) are documented. This documentation expects for [SELinux already being enabled](https://github.com/duxsco/gentoo-installation#enable-selinux). At this point, the system is in "permissive" mode.
 
+## Enable SELinux
+
+### Kernel command-line parameters
+
+Enable SELinux via kernel command-line parameter in GRUB config:
+
+```bash
+rsync -a /etc/default/grub /etc/default/._cfg0000_grub && \
+sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"$/GRUB_CMDLINE_LINUX_DEFAULT="\1 lsm=selinux gk.preserverun.disabled=1"/' /etc/default/._cfg0000_grub
+```
+
+Append `lsm=selinux gk.preserverun.disabled=1` to the kernel command line parameters in `grub.cfg` and GnuPG sign `grub.conf` in `/efi*`. Alternatively, you can follow the steps in [kernel update](#update-linux-kernel) to rebuild kernel/initramfs and generate new `grub.cfg`. For kernel recreation, I wouldn't delete ccache's cache in order to speed up things.
+
+Reboot the system.
+
+### Relabel
+
+Switch to [mcs policy type](https://wiki.gentoo.org/wiki/SELinux/Policy_store#Switching_active_policy_store) and [relabel the entire system](https://wiki.gentoo.org/wiki/SELinux/Installation#Relabel). But, don't forget to mount `/boot` and all `/efi*` first. Make sure to apply the `setfiles` command on `/boot`, `/var/cache/binpkgs`, `/var/cache/distfiles`, `/var/db/repos/gentoo`, `/var/tmp` and all `/efi*`.
+
+### Users
+
+Add the initial user to the administration SELinux user, and take care of services:
+- https://wiki.gentoo.org/wiki/SELinux/Installation#Define_the_administrator_accounts
+- https://wiki.gentoo.org/wiki/SELinux/Installation#Supporting_service_administration
+
+In `mcs`, map users to `user_u` by default instead of `unconfined_u`:
+
+```bash
+➤ semanage login -l
+
+Login Name           SELinux User         MLS/MCS Range        Service
+
+__default__          unconfined_u         s0-s0                *
+➤ semanage login -m -s user_u __default__
+➤ semanage login -l
+
+Login Name           SELinux User         MLS/MCS Range        Service
+
+__default__          user_u               s0-s0                *
+```
+
+Setup `app-admin/sudo`:
+
+```bash
+bash -c 'echo "%wheel ALL=(ALL) TYPE=sysadm_t ROLE=sysadm_r ALL" | EDITOR="tee" visudo -f /etc/sudoers.d/wheel; echo $?'
+```
+
+### Logging
+
+Enable logging:
+
+```bash
+rc-update add auditd
+```
+
+Reboot again.
+
 ## SSH port label assignment
 
 In the [custom Gentoo Linux installation](https://github.com/duxsco/gentoo-installation), the SSH port has been changed to 50022. This needs to be considered for no SELinux denials to occur:
