@@ -290,32 +290,32 @@ Relabeled /var/spool/cron/crontabs/root from system_u:object_r:unlabeled_t to sy
 
 ```
 ----
-time->Sat Apr 30 02:04:05 2022
-type=PROCTITLE msg=audit(1651277045.116:7): proctitle=6E6674002D63002D66002F7661722F6C69622F6E667461626C65732F72756C65732D73617665
-type=PATH msg=audit(1651277045.116:7): item=0 name="/var/lib/nftables/rules-save" inode=647577 dev=00:1c mode=0100600 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:var_lib_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
-type=CWD msg=audit(1651277045.116:7): cwd="/"
-type=SYSCALL msg=audit(1651277045.116:7): arch=c000003e syscall=257 success=yes exit=4 a0=ffffff9c a1=7ffc809cbb06 a2=0 a3=0 items=1 ppid=5466 pid=5467 auid=4294967295 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=4294967295 comm="nft" exe="/sbin/nft" subj=system_u:system_r:iptables_t key=(null)
-type=AVC msg=audit(1651277045.116:7): avc:  denied  { open } for  pid=5467 comm="nft" path="/var/lib/nftables/rules-save" dev="dm-0" ino=647577 scontext=system_u:system_r:iptables_t tcontext=system_u:object_r:var_lib_t tclass=file permissive=1
-type=AVC msg=audit(1651277045.116:7): avc:  denied  { read } for  pid=5467 comm="nft" name="rules-save" dev="dm-0" ino=647577 scontext=system_u:system_r:iptables_t tcontext=system_u:object_r:var_lib_t tclass=file permissive=1
+time->Wed May 11 01:42:40 2022
+type=PROCTITLE msg=audit(1652226160.839:7): proctitle=6E6674002D63002D66002F7661722F6C69622F6E667461626C65732F72756C65732D73617665
+type=PATH msg=audit(1652226160.839:7): item=0 name="/var/lib/nftables/rules-save" inode=945463 dev=00:1d mode=0100600 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:var_lib_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=CWD msg=audit(1652226160.839:7): cwd="/"
+type=SYSCALL msg=audit(1652226160.839:7): arch=c000003e syscall=257 success=yes exit=4 a0=ffffff9c a1=7ffe15d4cb06 a2=0 a3=0 items=1 ppid=5458 pid=5459 auid=4294967295 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=4294967295 comm="nft" exe="/sbin/nft" subj=system_u:system_r:iptables_t:s0 key=(null)
+type=AVC msg=audit(1652226160.839:7): avc:  denied  { open } for  pid=5459 comm="nft" path="/var/lib/nftables/rules-save" dev="dm-0" ino=945463 scontext=system_u:system_r:iptables_t:s0 tcontext=system_u:object_r:var_lib_t:s0 tclass=file permissive=1
+type=AVC msg=audit(1652226160.839:7): avc:  denied  { read } for  pid=5459 comm="nft" name="rules-save" dev="dm-0" ino=945463 scontext=system_u:system_r:iptables_t:s0 tcontext=system_u:object_r:var_lib_t:s0 tclass=file permissive=1
 ----
-time->Sat Apr 30 02:04:05 2022
-type=PROCTITLE msg=audit(1651277045.116:8): proctitle=6E6674002D63002D66002F7661722F6C69622F6E667461626C65732F72756C65732D73617665
-type=SYSCALL msg=audit(1651277045.116:8): arch=c000003e syscall=16 success=no exit=-25 a0=4 a1=5401 a2=7ffc809ca2d0 a3=20000000 items=0 ppid=5466 pid=5467 auid=4294967295 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=4294967295 comm="nft" exe="/sbin/nft" subj=system_u:system_r:iptables_t key=(null)
-type=AVC msg=audit(1651277045.116:8): avc:  denied  { ioctl } for  pid=5467 comm="nft" path="/var/lib/nftables/rules-save" dev="dm-0" ino=647577 ioctlcmd=0x5401 scontext=system_u:system_r:iptables_t tcontext=system_u:object_r:var_lib_t tclass=file permissive=1
+time->Wed May 11 01:42:40 2022
+type=PROCTITLE msg=audit(1652226160.839:8): proctitle=6E6674002D63002D66002F7661722F6C69622F6E667461626C65732F72756C65732D73617665
+type=SYSCALL msg=audit(1652226160.839:8): arch=c000003e syscall=16 success=no exit=-25 a0=4 a1=5401 a2=7ffe15d4c240 a3=20000000 items=0 ppid=5458 pid=5459 auid=4294967295 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=4294967295 comm="nft" exe="/sbin/nft" subj=system_u:system_r:iptables_t:s0 key=(null)
+type=AVC msg=audit(1652226160.839:8): avc:  denied  { ioctl } for  pid=5459 comm="nft" path="/var/lib/nftables/rules-save" dev="dm-0" ino=945463 ioctlcmd=0x5401 scontext=system_u:system_r:iptables_t:s0 tcontext=system_u:object_r:var_lib_t:s0 tclass=file permissive=1
 ----
-time->Sat Apr 30 02:04:05 2022
-type=PROCTITLE msg=audit(1651277045.116:9): proctitle=6E6674002D63002D66002F7661722F6C69622F6E667461626C65732F72756C65732D73617665
-type=PATH msg=audit(1651277045.116:9): item=0 name="" inode=647577 dev=00:1c mode=0100600 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:var_lib_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
-type=CWD msg=audit(1651277045.116:9): cwd="/"
-type=SYSCALL msg=audit(1651277045.116:9): arch=c000003e syscall=262 success=yes exit=0 a0=4 a1=7fb36d26ff15 a2=7ffc809b39c0 a3=1000 items=1 ppid=5466 pid=5467 auid=4294967295 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=4294967295 comm="nft" exe="/sbin/nft" subj=system_u:system_r:iptables_t key=(null)
-type=AVC msg=audit(1651277045.116:9): avc:  denied  { getattr } for  pid=5467 comm="nft" path="/var/lib/nftables/rules-save" dev="dm-0" ino=647577 scontext=system_u:system_r:iptables_t tcontext=system_u:object_r:var_lib_t tclass=file permissive=1
+time->Wed May 11 01:42:40 2022
+type=PROCTITLE msg=audit(1652226160.843:9): proctitle=6E6674002D63002D66002F7661722F6C69622F6E667461626C65732F72756C65732D73617665
+type=PATH msg=audit(1652226160.843:9): item=0 name="" inode=945463 dev=00:1d mode=0100600 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:var_lib_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=CWD msg=audit(1652226160.843:9): cwd="/"
+type=SYSCALL msg=audit(1652226160.843:9): arch=c000003e syscall=262 success=yes exit=0 a0=4 a1=7fe2cdf8ef15 a2=7ffe15d35930 a3=1000 items=1 ppid=5458 pid=5459 auid=4294967295 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=4294967295 comm="nft" exe="/sbin/nft" subj=system_u:system_r:iptables_t:s0 key=(null)
+type=AVC msg=audit(1652226160.843:9): avc:  denied  { getattr } for  pid=5459 comm="nft" path="/var/lib/nftables/rules-save" dev="dm-0" ino=945463 scontext=system_u:system_r:iptables_t:s0 tcontext=system_u:object_r:var_lib_t:s0 tclass=file permissive=1
 ```
 
 List file context mapping definitions:
 
 ```bash
 ➤ semanage fcontext -l | grep "/var/lib/.*tables"
-/var/lib/ip6?tables(/.*)?                          all files          system_u:object_r:initrc_tmp_t
+/var/lib/ip6?tables(/.*)?                          all files          system_u:object_r:initrc_tmp_t:s0
 ```
 
 Policies:
@@ -328,14 +328,14 @@ allow iptables_t initrc_tmp_t:file { append getattr ioctl lock open read write }
 Modify:
 
 ```bash
-semanage fcontext -a -s system_u -r object_r -t initrc_tmp_t "/var/lib/nftables(/.*)?"
+semanage fcontext -a -s system_u -r s0 -t initrc_tmp_t "/var/lib/nftables(/.*)?"
 ```
 
 Restore:
 
 ```bash
 ➤ restorecon -R -F -v /var/lib/nftables
-Relabeled /var/lib/nftables from system_u:object_r:var_lib_t to system_u:object_r:initrc_tmp_t
-Relabeled /var/lib/nftables/.keep_net-firewall_nftables-0 from system_u:object_r:var_lib_t to system_u:object_r:initrc_tmp_t
-Relabeled /var/lib/nftables/rules-save from system_u:object_r:var_lib_t to system_u:object_r:initrc_tmp_t
+Relabeled /var/lib/nftables from system_u:object_r:var_lib_t:s0 to system_u:object_r:initrc_tmp_t:s0
+Relabeled /var/lib/nftables/.keep_net-firewall_nftables-0 from system_u:object_r:var_lib_t:s0 to system_u:object_r:initrc_tmp_t:s0
+Relabeled /var/lib/nftables/rules-save from system_u:object_r:var_lib_t:s0 to system_u:object_r:initrc_tmp_t:s0
 ```
