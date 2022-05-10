@@ -21,7 +21,7 @@ ssh_port_t                     tcp      50022, 22
 Files in `/boot` and `/efi*` required for booting need to be GnuPG signed (expect for Secure Boot signed EFI binary). For SELinux not to complain, the GnuPG homedir is stored in `/etc/gentoo-installation/gnupg`. In the following, a suitable file context is assigned:
 
 ```bash
-➤ semanage fcontext -l | grep "\\\.gnupg"
+➤ semanage fcontext -l | grep -e "^/root[[:space:]]" -e "\\\.gnupg"
 /home/[^/]+/\.gnupg(/.+)?           all files  user_u:object_r:gpg_secret_t
 /home/[^/]+/\.gnupg/S\.gpg-agent.*  socket     user_u:object_r:gpg_agent_tmp_t
 /home/[^/]+/\.gnupg/S\.scdaemon     socket     user_u:object_r:gpg_agent_tmp_t
@@ -32,6 +32,7 @@ Files in `/boot` and `/efi*` required for booting need to be GnuPG signed (expec
 /home/david/\.gnupg/S\.scdaemon     socket     staff_u:object_r:gpg_agent_tmp_t
 /home/david/\.gnupg/crls\.d(/.+)?   all files  staff_u:object_r:dirmngr_home_t
 /home/david/\.gnupg/log-socket      socket     staff_u:object_r:gpg_agent_tmp_t
+/root                               directory  root:object_r:user_home_dir_t
 /root/\.gnupg(/.+)?                 all files  root:object_r:gpg_secret_t
 /root/\.gnupg/S\.gpg-agent.*        socket     root:object_r:gpg_agent_tmp_t
 /root/\.gnupg/S\.scdaemon           socket     root:object_r:gpg_agent_tmp_t
@@ -42,24 +43,40 @@ Files in `/boot` and `/efi*` required for booting need to be GnuPG signed (expec
 Execute the following in a bash shell:
 
 ```bash
-semanage fcontext -a -s staff_u -r object_r -t user_home_dir_t -f d /root
-semanage fcontext -l | grep "^/root/\\\.gnupg" | while read -r I; do
-    MYCONTEXT="$(awk -F":" '{print $NF}' <<<"${I}")"
-    MYPATH="$(awk '{print $1}' <<<"${I}" | sed 's|root/\\\.gnupg|etc/gentoo-installation/gnupg|')"
-    if [[ $(awk '{print $2}' <<<"${I}") == socket ]]; then
-        MYTYPE="s"
-    else
-        MYTYPE="a"
-    fi
-    semanage fcontext -a -f "${MYTYPE}" -s staff_u -r object_r -t "${MYCONTEXT}" "${I}"
-    semanage fcontext -a -f "${MYTYPE}" -s staff_u -r object_r -t "${MYCONTEXT}" "${MYPATH}"
-done
+semanage fcontext -a -f d -s staff_u -t user_home_dir_t /root
+while read -r line; do
+
+    case $(awk '{print $2}' <<<"${line}") in
+        regular)
+            file_type="f";;
+        directory)
+            file_type="d";;
+        character)
+            file_type="c";;
+        block)
+            file_type="b";;
+        socket)
+            file_type="s";;
+        symbolic)
+            file_type="l";;
+        named)
+            file_type="p";;
+        all)
+            file_type="a";;
+    esac
+
+    selinux_type="$(awk -F':' '{print $NF}' <<<"${line}")"
+    path="$(awk '{print $1}' <<<"${line}")"
+
+    semanage fcontext -a -f "${file_type}" -s staff_u -t "${selinux_type}" "${path}"
+    semanage fcontext -a -f "${file_type}" -s staff_u -t "${selinux_type}" "$(sed 's|root/\\\.gnupg|etc/gentoo-installation/gnupg|' <<<${path})"
+done < <(semanage fcontext -l | grep "^/root/\\\.gnupg")
 ```
 
 Result:
 
 ```bash
-➤ semanage fcontext -l | grep -e "\\\.gnupg" -e "/etc/gentoo-installation/gnupg"
+➤ semanage fcontext -l | grep -e "^/root[[:space:]]" -e "\\\.gnupg" -e "/etc/gentoo-installation/gnupg"
 /etc/gentoo-installation/gnupg(/.+)?           all files  staff_u:object_r:gpg_secret_t
 /etc/gentoo-installation/gnupg/S\.gpg-agent.*  socket     staff_u:object_r:gpg_agent_tmp_t
 /etc/gentoo-installation/gnupg/S\.scdaemon     socket     staff_u:object_r:gpg_agent_tmp_t
@@ -75,6 +92,7 @@ Result:
 /home/david/\.gnupg/S\.scdaemon                socket     staff_u:object_r:gpg_agent_tmp_t
 /home/david/\.gnupg/crls\.d(/.+)?              all files  staff_u:object_r:dirmngr_home_t
 /home/david/\.gnupg/log-socket                 socket     staff_u:object_r:gpg_agent_tmp_t
+/root                                          directory  staff_u:object_r:user_home_dir_t
 /root/\.gnupg(/.+)?                            all files  staff_u:object_r:gpg_secret_t
 /root/\.gnupg/S\.gpg-agent.*                   socket     staff_u:object_r:gpg_agent_tmp_t
 /root/\.gnupg/S\.scdaemon                      socket     staff_u:object_r:gpg_agent_tmp_t
@@ -85,7 +103,7 @@ Result:
 Restore:
 
 ```bash
-restorecon -RFv /etc/gentoo-installation/
+restorecon -RFv /root /etc/gentoo-installation/
 ```
 
 ## OpenRC patch
@@ -111,6 +129,8 @@ The OpenRC patch was suggested as a possible solution by [perfinion](https://git
  * User patches applied.
  * ===========================================================
 ```
+
+Reboot the system.
 
 ## Creating SELinux policies
 
