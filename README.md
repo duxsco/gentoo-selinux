@@ -299,6 +299,8 @@ Relabeled /var/lib/nftables/rules-save from system_u:object_r:var_lib_t:s0 to sy
 
 ### sys-kernel/genkernel
 
+#### /usr/share/genkernel
+
 `ausearch` output:
 
 ```
