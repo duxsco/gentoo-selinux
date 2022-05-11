@@ -1,6 +1,6 @@
 # SELinux rules for my custom Gentoo Linux installation (WIP)
 
-Here, SELinux related changes applied to my [custom Gentoo Linux installation](https://github.com/duxsco/gentoo-installation) are documented. This documentation expects for [SELinux already being enabled](https://github.com/duxsco/gentoo-installation#enable-selinux). At this point, the system is in "permissive" mode.
+Here, SELinux related changes applied to my [custom Gentoo Linux installation](https://github.com/duxsco/gentoo-installation) are documented.
 
 ## Enable SELinux
 
