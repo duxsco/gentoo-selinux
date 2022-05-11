@@ -59,6 +59,32 @@ rc-update add auditd
 
 Reboot again.
 
+## OpenRC patch
+
+The OpenRC patch was suggested as a possible solution by [perfinion](https://github.com/perfinion) to fix bootup. Thx for that 🙂 Save the patch:
+
+```bash
+➤ tree /etc/portage/patches
+/etc/portage/patches
+└── sys-apps
+    └── openrc
+        └── init-early.sh.patch
+
+2 directories, 1 files
+```
+
+... and run `emerge -1 sys-apps/openrc`. Such a line should be printed:
+
+```
+ * ===========================================================
+ * Applying user patches from /etc/portage/patches ...
+ * Applying init-early.sh.patch ...                    [ ok ]
+ * User patches applied.
+ * ===========================================================
+```
+
+Reboot the system.
+
 ## SSH port label assignment
 
 In the [custom Gentoo Linux installation](https://github.com/duxsco/gentoo-installation), the SSH port has been changed to 50022. This needs to be considered for no SELinux denials to occur:
@@ -156,32 +182,6 @@ Restore:
 ```bash
 restorecon -RFv /root /etc/gentoo-installation/
 ```
-
-## OpenRC patch
-
-The OpenRC patch was suggested as a possible solution by [perfinion](https://github.com/perfinion) to fix bootup. Thx for that 🙂 Save the patch:
-
-```bash
-➤ tree /etc/portage/patches
-/etc/portage/patches
-└── sys-apps
-    └── openrc
-        └── init-early.sh.patch
-
-2 directories, 1 files
-```
-
-... and run `emerge -1 sys-apps/openrc`. Such a line should be printed:
-
-```
- * ===========================================================
- * Applying user patches from /etc/portage/patches ...
- * Applying init-early.sh.patch ...                    [ ok ]
- * User patches applied.
- * ===========================================================
-```
-
-Reboot the system.
 
 ## Creating SELinux policies
 
