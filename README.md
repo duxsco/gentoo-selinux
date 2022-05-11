@@ -195,18 +195,18 @@ Executing `create_policy.sh` resulted in following `ausearch` outputs with non-p
 ----
 time->Fri Apr 29 23:25:34 2022
 type=PROCTITLE msg=audit(1651267534.933:7): proctitle="/usr/sbin/crond"
-type=PATH msg=audit(1651267534.933:7): item=0 name="/var/spool/cron/crontabs/root" inode=641849 dev=00:1c mode=0100600 ouid=0 ogid=460 rdev=00:00 obj=system_u:object_r:unlabeled_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=PATH msg=audit(1651267534.933:7): item=0 name="/var/spool/cron/crontabs/root" inode=641849 dev=00:1c mode=0100600 ouid=0 ogid=460 rdev=00:00 obj=system_u:object_r:unlabeled_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
 type=CWD msg=audit(1651267534.933:7): cwd="/"
-type=SYSCALL msg=audit(1651267534.933:7): arch=c000003e syscall=262 success=yes exit=0 a0=ffffff9c a1=7ffdefcdd160 a2=7ffdefcdd0d0 a3=0 items=1 ppid=1 pid=5437 auid=4294967295 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=4294967295 comm="crond" exe="/usr/sbin/crond" subj=system_u:system_r:crond_t key=(null)
-type=AVC msg=audit(1651267534.933:7): avc:  denied  { getattr } for  pid=5437 comm="crond" path="/var/spool/cron/crontabs/root" dev="dm-0" ino=641849 scontext=system_u:system_r:crond_t tcontext=system_u:object_r:unlabeled_t tclass=file permissive=1
+type=SYSCALL msg=audit(1651267534.933:7): arch=c000003e syscall=262 success=yes exit=0 a0=ffffff9c a1=7ffdefcdd160 a2=7ffdefcdd0d0 a3=0 items=1 ppid=1 pid=5437 auid=4294967295 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=4294967295 comm="crond" exe="/usr/sbin/crond" subj=system_u:system_r:crond_t:s0 key=(null)
+type=AVC msg=audit(1651267534.933:7): avc:  denied  { getattr } for  pid=5437 comm="crond" path="/var/spool/cron/crontabs/root" dev="dm-0" ino=641849 scontext=system_u:system_r:crond_t:s0 tcontext=system_u:object_r:unlabeled_t:s0 tclass=file permissive=1
 ----
 time->Fri Apr 29 23:25:34 2022
 type=PROCTITLE msg=audit(1651267534.933:8): proctitle="/usr/sbin/crond"
-type=PATH msg=audit(1651267534.933:8): item=0 name="/var/spool/cron/crontabs/root" inode=641849 dev=00:1c mode=0100600 ouid=0 ogid=460 rdev=00:00 obj=system_u:object_r:unlabeled_t nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=PATH msg=audit(1651267534.933:8): item=0 name="/var/spool/cron/crontabs/root" inode=641849 dev=00:1c mode=0100600 ouid=0 ogid=460 rdev=00:00 obj=system_u:object_r:unlabeled_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
 type=CWD msg=audit(1651267534.933:8): cwd="/"
-type=SYSCALL msg=audit(1651267534.933:8): arch=c000003e syscall=257 success=yes exit=7 a0=ffffff9c a1=7ffdefcdd5d0 a2=800 a3=0 items=1 ppid=1 pid=5437 auid=4294967295 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=4294967295 comm="crond" exe="/usr/sbin/crond" subj=system_u:system_r:crond_t key=(null)
-type=AVC msg=audit(1651267534.933:8): avc:  denied  { open } for  pid=5437 comm="crond" path="/var/spool/cron/crontabs/root" dev="dm-0" ino=641849 scontext=system_u:system_r:crond_t tcontext=system_u:object_r:unlabeled_t tclass=file permissive=1
-type=AVC msg=audit(1651267534.933:8): avc:  denied  { read } for  pid=5437 comm="crond" name="root" dev="dm-0" ino=641849 scontext=system_u:system_r:crond_t tcontext=system_u:object_r:unlabeled_t tclass=file permissive=1
+type=SYSCALL msg=audit(1651267534.933:8): arch=c000003e syscall=257 success=yes exit=7 a0=ffffff9c a1=7ffdefcdd5d0 a2=800 a3=0 items=1 ppid=1 pid=5437 auid=4294967295 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=4294967295 comm="crond" exe="/usr/sbin/crond" subj=system_u:system_r:crond_t:s0 key=(null)
+type=AVC msg=audit(1651267534.933:8): avc:  denied  { open } for  pid=5437 comm="crond" path="/var/spool/cron/crontabs/root" dev="dm-0" ino=641849 scontext=system_u:system_r:crond_t:s0 tcontext=system_u:object_r:unlabeled_t:s0 tclass=file permissive=1
+type=AVC msg=audit(1651267534.933:8): avc:  denied  { read } for  pid=5437 comm="crond" name="root" dev="dm-0" ino=641849 scontext=system_u:system_r:crond_t:s0 tcontext=system_u:object_r:unlabeled_t:s0 tclass=file permissive=1
 ```
 
 Policies:
@@ -223,22 +223,22 @@ List file context mapping definitions:
 
 ```bash
 ➤ semanage fcontext -l | grep "/var/spool/cron/crontabs"
-/var/spool/cron/crontabs                           directory          system_u:object_r:cron_spool_t
+/var/spool/cron/crontabs                           directory          system_u:object_r:cron_spool_t:s0
 /var/spool/cron/crontabs/.*                        regular file       <<None>>
-/var/spool/cron/crontabs/munin                     regular file       system_u:object_r:system_cron_spool_t
+/var/spool/cron/crontabs/munin                     regular file       system_u:object_r:system_cron_spool_t:s0
 ```
 
 Modify:
 
 ```bash
-➤ semanage fcontext -m -f f -s system_u -r object_r -t user_cron_spool_t "/var/spool/cron/crontabs/.*"
+➤ semanage fcontext -a -f f -t user_cron_spool_t "/var/spool/cron/crontabs/[^\.].*"
 ```
 
 Restore:
 
 ```bash
-➤ restorecon -F -v /var/spool/cron/crontabs/*
-Relabeled /var/spool/cron/crontabs/root from system_u:object_r:unlabeled_t to system_u:object_r:user_cron_spool_t
+➤ restorecon -RFv /var/spool/cron/crontabs
+Relabeled /var/spool/cron/crontabs/root from system_u:object_r:unlabeled_t:s0 to system_u:object_r:user_cron_spool_t:s0
 ```
 
 ### net-firewall/nftables
@@ -285,7 +285,7 @@ allow iptables_t initrc_tmp_t:file { append getattr ioctl lock open read write }
 Modify:
 
 ```bash
-semanage fcontext -a -s system_u -r s0 -t initrc_tmp_t "/var/lib/nftables(/.*)?"
+semanage fcontext -a -t initrc_tmp_t "/var/lib/nftables(/[^\.].*)?"
 ```
 
 Restore:
@@ -293,7 +293,6 @@ Restore:
 ```bash
 ➤ restorecon -R -F -v /var/lib/nftables
 Relabeled /var/lib/nftables from system_u:object_r:var_lib_t:s0 to system_u:object_r:initrc_tmp_t:s0
-Relabeled /var/lib/nftables/.keep_net-firewall_nftables-0 from system_u:object_r:var_lib_t:s0 to system_u:object_r:initrc_tmp_t:s0
 Relabeled /var/lib/nftables/rules-save from system_u:object_r:var_lib_t:s0 to system_u:object_r:initrc_tmp_t:s0
 ```
 
@@ -463,6 +462,4 @@ The policies created with `create_policy.sh` are in the "policy" folder. In addi
 ```bash
 setsebool -P allow_mount_anyfile on
 setsebool -P systemd_tmpfiles_manage_all on
-setsebool -P gpg_read_all_user_content on
-setsebool -P gpg_manage_all_user_content on
 ```
