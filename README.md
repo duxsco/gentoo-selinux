@@ -79,22 +79,16 @@ Files in `/boot` and `/efi*` required for booting need to be GnuPG signed (expec
 
 ```bash
 ➤ semanage fcontext -l | grep -e "^/root[[:space:]]" -e "\\\.gnupg"
-/home/[^/]+/\.gnupg(/.+)?           all files  user_u:object_r:gpg_secret_t
-/home/[^/]+/\.gnupg/S\.gpg-agent.*  socket     user_u:object_r:gpg_agent_tmp_t
-/home/[^/]+/\.gnupg/S\.scdaemon     socket     user_u:object_r:gpg_agent_tmp_t
-/home/[^/]+/\.gnupg/crls\.d(/.+)?   all files  user_u:object_r:dirmngr_home_t
-/home/[^/]+/\.gnupg/log-socket      socket     user_u:object_r:gpg_agent_tmp_t
-/home/david/\.gnupg(/.+)?           all files  staff_u:object_r:gpg_secret_t
-/home/david/\.gnupg/S\.gpg-agent.*  socket     staff_u:object_r:gpg_agent_tmp_t
-/home/david/\.gnupg/S\.scdaemon     socket     staff_u:object_r:gpg_agent_tmp_t
-/home/david/\.gnupg/crls\.d(/.+)?   all files  staff_u:object_r:dirmngr_home_t
-/home/david/\.gnupg/log-socket      socket     staff_u:object_r:gpg_agent_tmp_t
-/root                               directory  root:object_r:user_home_dir_t
-/root/\.gnupg(/.+)?                 all files  root:object_r:gpg_secret_t
-/root/\.gnupg/S\.gpg-agent.*        socket     root:object_r:gpg_agent_tmp_t
-/root/\.gnupg/S\.scdaemon           socket     root:object_r:gpg_agent_tmp_t
-/root/\.gnupg/crls\.d(/.+)?         all files  root:object_r:dirmngr_home_t
-/root/\.gnupg/log-socket            socket     root:object_r:gpg_agent_tmp_t
+/home/[^/]+/\.gnupg(/.+)?           all files  user_u:object_r:gpg_secret_t:s0
+/home/[^/]+/\.gnupg/S\.gpg-agent.*  socket     user_u:object_r:gpg_agent_tmp_t:s0
+/home/[^/]+/\.gnupg/S\.scdaemon     socket     user_u:object_r:gpg_agent_tmp_t:s0
+/home/[^/]+/\.gnupg/crls\.d(/.+)?   all files  user_u:object_r:dirmngr_home_t:s0
+/home/[^/]+/\.gnupg/log-socket      socket     user_u:object_r:gpg_agent_tmp_t:s0
+/home/david/\.gnupg(/.+)?           all files  staff_u:object_r:gpg_secret_t:s0
+/home/david/\.gnupg/S\.gpg-agent.*  socket     staff_u:object_r:gpg_agent_tmp_t:s0
+/home/david/\.gnupg/S\.scdaemon     socket     staff_u:object_r:gpg_agent_tmp_t:s0
+/home/david/\.gnupg/crls\.d(/.+)?   all files  staff_u:object_r:dirmngr_home_t:s0
+/home/david/\.gnupg/log-socket      socket     staff_u:object_r:gpg_agent_tmp_t:s0
 ```
 
 Execute the following in a bash shell:
@@ -122,39 +116,39 @@ while read -r line; do
             file_type="a";;
     esac
 
-    selinux_type="$(awk -F':' '{print $NF}' <<<"${line}")"
+    selinux_type="$(awk -F':' '{print $(NF-1)}' <<<"${line}")"
     path="$(awk '{print $1}' <<<"${line}")"
 
-    semanage fcontext -a -f "${file_type}" -s staff_u -t "${selinux_type}" "${path}"
-    semanage fcontext -a -f "${file_type}" -s staff_u -t "${selinux_type}" "$(sed 's|root/\\\.gnupg|etc/gentoo-installation/gnupg|' <<<${path})"
-done < <(semanage fcontext -l | grep "^/root/\\\.gnupg")
+    semanage fcontext -a -f "${file_type}" -s staff_u -t "${selinux_type}" "$(sed 's|home/\[\^/\]+/\\\.gnupg|root/\\\.gnupg|' <<<${path})"
+    semanage fcontext -a -f "${file_type}" -s staff_u -t "${selinux_type}" "$(sed 's|home/\[\^/\]+/\\\.gnupg|etc/gentoo-installation/gnupg|' <<<${path})"
+done < <(semanage fcontext -l | grep "/home/\[\^/\]+/\\\.gnupg")
 ```
 
 Result:
 
 ```bash
 ➤ semanage fcontext -l | grep -e "^/root[[:space:]]" -e "\\\.gnupg" -e "/etc/gentoo-installation/gnupg"
-/etc/gentoo-installation/gnupg(/.+)?           all files  staff_u:object_r:gpg_secret_t
-/etc/gentoo-installation/gnupg/S\.gpg-agent.*  socket     staff_u:object_r:gpg_agent_tmp_t
-/etc/gentoo-installation/gnupg/S\.scdaemon     socket     staff_u:object_r:gpg_agent_tmp_t
-/etc/gentoo-installation/gnupg/crls\.d(/.+)?   all files  staff_u:object_r:dirmngr_home_t
-/etc/gentoo-installation/gnupg/log-socket      socket     staff_u:object_r:gpg_agent_tmp_t
-/home/[^/]+/\.gnupg(/.+)?                      all files  user_u:object_r:gpg_secret_t
-/home/[^/]+/\.gnupg/S\.gpg-agent.*             socket     user_u:object_r:gpg_agent_tmp_t
-/home/[^/]+/\.gnupg/S\.scdaemon                socket     user_u:object_r:gpg_agent_tmp_t
-/home/[^/]+/\.gnupg/crls\.d(/.+)?              all files  user_u:object_r:dirmngr_home_t
-/home/[^/]+/\.gnupg/log-socket                 socket     user_u:object_r:gpg_agent_tmp_t
-/home/david/\.gnupg(/.+)?                      all files  staff_u:object_r:gpg_secret_t
-/home/david/\.gnupg/S\.gpg-agent.*             socket     staff_u:object_r:gpg_agent_tmp_t
-/home/david/\.gnupg/S\.scdaemon                socket     staff_u:object_r:gpg_agent_tmp_t
-/home/david/\.gnupg/crls\.d(/.+)?              all files  staff_u:object_r:dirmngr_home_t
-/home/david/\.gnupg/log-socket                 socket     staff_u:object_r:gpg_agent_tmp_t
-/root                                          directory  staff_u:object_r:user_home_dir_t
-/root/\.gnupg(/.+)?                            all files  staff_u:object_r:gpg_secret_t
-/root/\.gnupg/S\.gpg-agent.*                   socket     staff_u:object_r:gpg_agent_tmp_t
-/root/\.gnupg/S\.scdaemon                      socket     staff_u:object_r:gpg_agent_tmp_t
-/root/\.gnupg/crls\.d(/.+)?                    all files  staff_u:object_r:dirmngr_home_t
-/root/\.gnupg/log-socket                       socket     staff_u:object_r:gpg_agent_tmp_t
+/etc/gentoo-installation/gnupg(/.+)?           all files  staff_u:object_r:gpg_secret_t:s0
+/etc/gentoo-installation/gnupg/S\.gpg-agent.*  socket     staff_u:object_r:gpg_agent_tmp_t:s0
+/etc/gentoo-installation/gnupg/S\.scdaemon     socket     staff_u:object_r:gpg_agent_tmp_t:s0
+/etc/gentoo-installation/gnupg/crls\.d(/.+)?   all files  staff_u:object_r:dirmngr_home_t:s0
+/etc/gentoo-installation/gnupg/log-socket      socket     staff_u:object_r:gpg_agent_tmp_t:s0
+/home/[^/]+/\.gnupg(/.+)?                      all files  user_u:object_r:gpg_secret_t:s0
+/home/[^/]+/\.gnupg/S\.gpg-agent.*             socket     user_u:object_r:gpg_agent_tmp_t:s0
+/home/[^/]+/\.gnupg/S\.scdaemon                socket     user_u:object_r:gpg_agent_tmp_t:s0
+/home/[^/]+/\.gnupg/crls\.d(/.+)?              all files  user_u:object_r:dirmngr_home_t:s0
+/home/[^/]+/\.gnupg/log-socket                 socket     user_u:object_r:gpg_agent_tmp_t:s0
+/home/david/\.gnupg(/.+)?                      all files  staff_u:object_r:gpg_secret_t:s0
+/home/david/\.gnupg/S\.gpg-agent.*             socket     staff_u:object_r:gpg_agent_tmp_t:s0
+/home/david/\.gnupg/S\.scdaemon                socket     staff_u:object_r:gpg_agent_tmp_t:s0
+/home/david/\.gnupg/crls\.d(/.+)?              all files  staff_u:object_r:dirmngr_home_t:s0
+/home/david/\.gnupg/log-socket                 socket     staff_u:object_r:gpg_agent_tmp_t:s0
+/root                                          directory  staff_u:object_r:user_home_dir_t:s0
+/root/\.gnupg(/.+)?                            all files  staff_u:object_r:gpg_secret_t:s0
+/root/\.gnupg/S\.gpg-agent.*                   socket     staff_u:object_r:gpg_agent_tmp_t:s0
+/root/\.gnupg/S\.scdaemon                      socket     staff_u:object_r:gpg_agent_tmp_t:s0
+/root/\.gnupg/crls\.d(/.+)?                    all files  staff_u:object_r:dirmngr_home_t:s0
+/root/\.gnupg/log-socket                       socket     staff_u:object_r:gpg_agent_tmp_t:s0
 ```
 
 Restore:
