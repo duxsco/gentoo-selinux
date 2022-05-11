@@ -183,43 +183,6 @@ Restore:
 restorecon -RFv /root /etc/gentoo-installation/
 ```
 
-## Creating SELinux policies
-
-I created a script to simplify policy creation for denials printed out by `dmesg` and `ausearch`. Reboot after `semodule -i ...` and create the next SELinux policy. The script creates the `.te` file in the current directory!
-
-```bash
-➤ bash ../create_policy.sh
-"my_00001_permissive_dmesg-systemd_tmpfiles_t-self.te" has been created!
-
-Please, check the file, create the policy module and install it:
-make -f /usr/share/selinux/strict/include/Makefile my_00001_permissive_dmesg-systemd_tmpfiles_t-self.pp
-semodule -i my_00001_permissive_dmesg-systemd_tmpfiles_t-self.pp
-```
-
-In certain cases, a warning is printed and no `.te` file is created:
-
-```bash
-➤ bash ../create_policy.sh
-audit2allow printed a warning:
-
-
-#============= systemd_tmpfiles_t ==============
-
-#!!!! This avc can be allowed using the boolean 'systemd_tmpfiles_manage_all'
-allow systemd_tmpfiles_t portage_cache_t:dir { getattr open read relabelfrom relabelto };
-
-Aborting...
-```
-
-The policies created with `create_policy.sh` are in the "policy" folder. In addition to building and installing them, enable following booleans:
-
-```bash
-setsebool -P allow_mount_anyfile on
-setsebool -P systemd_tmpfiles_manage_all on
-setsebool -P gpg_read_all_user_content on
-setsebool -P gpg_manage_all_user_content on
-```
-
 ## Non-policy based fixes
 
 Executing `create_policy.sh` resulted in following `ausearch` outputs with non-policy based fixes shows in the following.
@@ -332,4 +295,41 @@ Restore:
 Relabeled /var/lib/nftables from system_u:object_r:var_lib_t:s0 to system_u:object_r:initrc_tmp_t:s0
 Relabeled /var/lib/nftables/.keep_net-firewall_nftables-0 from system_u:object_r:var_lib_t:s0 to system_u:object_r:initrc_tmp_t:s0
 Relabeled /var/lib/nftables/rules-save from system_u:object_r:var_lib_t:s0 to system_u:object_r:initrc_tmp_t:s0
+```
+
+## Creating SELinux policies
+
+I created a script to simplify policy creation for denials printed out by `dmesg` and `ausearch`. Reboot after `semodule -i ...` and create the next SELinux policy. The script creates the `.te` file in the current directory!
+
+```bash
+➤ bash ../create_policy.sh
+"my_00001_permissive_dmesg-systemd_tmpfiles_t-self.te" has been created!
+
+Please, check the file, create the policy module and install it:
+make -f /usr/share/selinux/strict/include/Makefile my_00001_permissive_dmesg-systemd_tmpfiles_t-self.pp
+semodule -i my_00001_permissive_dmesg-systemd_tmpfiles_t-self.pp
+```
+
+In certain cases, a warning is printed and no `.te` file is created:
+
+```bash
+➤ bash ../create_policy.sh
+audit2allow printed a warning:
+
+
+#============= systemd_tmpfiles_t ==============
+
+#!!!! This avc can be allowed using the boolean 'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t portage_cache_t:dir { getattr open read relabelfrom relabelto };
+
+Aborting...
+```
+
+The policies created with `create_policy.sh` are in the "policy" folder. In addition to building and installing them, enable following booleans:
+
+```bash
+setsebool -P allow_mount_anyfile on
+setsebool -P systemd_tmpfiles_manage_all on
+setsebool -P gpg_read_all_user_content on
+setsebool -P gpg_manage_all_user_content on
 ```
