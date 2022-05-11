@@ -297,6 +297,92 @@ Relabeled /var/lib/nftables/.keep_net-firewall_nftables-0 from system_u:object_r
 Relabeled /var/lib/nftables/rules-save from system_u:object_r:var_lib_t:s0 to system_u:object_r:initrc_tmp_t:s0
 ```
 
+### sys-kernel/genkernel
+
+`ausearch` output:
+
+```
+----
+time->Wed May 11 02:43:03 2022
+type=PROCTITLE msg=audit(1652229783.543:21): proctitle=2F7573722F62696E2F707974686F6E332E39002F7573722F73686172652F67656E6B65726E656C2F706174685F657870616E6465722E7079002F7661722F6C6F672F67656E6B65726E656C2E6C6F67
+type=PATH msg=audit(1652229783.543:21): item=2 name="/lib64/ld-linux-x86-64.so.2" inode=63199 dev=00:1d mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:ld_so_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=PATH msg=audit(1652229783.543:21): item=1 name="/usr/bin/python3.9" inode=86506 dev=00:1d mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:bin_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=PATH msg=audit(1652229783.543:21): item=0 name="/usr/share/genkernel/path_expander.py" inode=129966 dev=00:1d mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:usr_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=CWD msg=audit(1652229783.543:21): cwd="/root/policy"
+type=EXECVE msg=audit(1652229783.543:21): argc=3 a0="/usr/bin/python3.9" a1="/usr/share/genkernel/path_expander.py" a2="/var/log/genkernel.log"
+type=SYSCALL msg=audit(1652229783.543:21): arch=c000003e syscall=59 success=yes exit=0 a0=5618038cae00 a1=5618038d87f0 a2=561803881550 a3=d94928d10905999e items=3 ppid=6255 pid=6256 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts0 ses=1 comm="path_expander.p" exe="/usr/bin/python3.9" subj=staff_u:sysadm_r:sysadm_t:s0-s0:c0.c1023 key=(null)
+type=AVC msg=audit(1652229783.543:21): avc:  denied  { execute_no_trans } for  pid=6256 comm="genkernel" path="/usr/share/genkernel/path_expander.py" dev="dm-0" ino=129966 scontext=staff_u:sysadm_r:sysadm_t:s0-s0:c0.c1023 tcontext=system_u:object_r:usr_t:s0 tclass=file permissive=1
+type=AVC msg=audit(1652229783.543:21): avc:  denied  { execute } for  pid=6256 comm="genkernel" name="path_expander.py" dev="dm-0" ino=129966 scontext=staff_u:sysadm_r:sysadm_t:s0-s0:c0.c1023 tcontext=system_u:object_r:usr_t:s0 tclass=file permissive=1
+----
+time->Wed May 11 02:51:31 2022
+type=PROCTITLE msg=audit(1652230291.399:36): proctitle=2F62696E2F62617368002F7573722F73686172652F67656E6B65726E656C2F67656E5F776F726B65722E736800756E7061636B
+type=PATH msg=audit(1652230291.399:36): item=2 name="/lib64/ld-linux-x86-64.so.2" inode=63199 dev=00:1d mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:ld_so_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=PATH msg=audit(1652230291.399:36): item=1 name="/bin/bash" inode=94026 dev=00:1d mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:shell_exec_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=PATH msg=audit(1652230291.399:36): item=0 name="/usr/share/genkernel/gen_worker.sh" inode=129789 dev=00:1d mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:usr_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=CWD msg=audit(1652230291.399:36): cwd="/var/tmp/genkernel/gk_PEB2CUKh"
+type=EXECVE msg=audit(1652230291.399:36): argc=3 a0="/bin/bash" a1="/usr/share/genkernel/gen_worker.sh" a2="unpack"
+type=SYSCALL msg=audit(1652230291.399:36): arch=c000003e syscall=59 success=yes exit=0 a0=558e92eeddf0 a1=558e92eedf10 a2=558e92eeda60 a3=7fd7c001c008 items=3 ppid=2813 pid=2814 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts0 ses=1 comm="gen_worker.sh" exe="/bin/bash" subj=staff_u:sysadm_r:portage_t:s0-s0:c0.c1023 key=(null)
+type=AVC msg=audit(1652230291.399:36): avc:  denied  { execute_no_trans } for  pid=2814 comm="sandbox" path="/usr/share/genkernel/gen_worker.sh" dev="dm-0" ino=129789 scontext=staff_u:sysadm_r:portage_t:s0-s0:c0.c1023 tcontext=system_u:object_r:usr_t:s0 tclass=file permissive=1
+type=AVC msg=audit(1652230291.399:36): avc:  denied  { execute } for  pid=2814 comm="sandbox" name="gen_worker.sh" dev="dm-0" ino=129789 scontext=staff_u:sysadm_r:portage_t:s0-s0:c0.c1023 tcontext=system_u:object_r:usr_t:s0 tclass=file permissive=1
+```
+
+List file context mapping definitions:
+
+```bash
+➤ semanage fcontext -l | grep "/usr/share" | grep -e "\.sh" -e "\.py" -e "\.pl"
+/usr/share/GNUstep/Makefiles/[^/]*\.sh             regular file       system_u:object_r:bin_t:s0
+/usr/share/PackageKit/pk-upgrade-distro\.sh        regular file       system_u:object_r:bin_t:s0
+/usr/share/ajaxterm/ajaxterm\.py.*                 regular file       system_u:object_r:bin_t:s0
+/usr/share/ajaxterm/qweb\.py.*                     regular file       system_u:object_r:bin_t:s0
+/usr/share/apr(-[0-9])?/build/[^/]+\.sh            regular file       system_u:object_r:bin_t:s0
+/usr/share/build-1/[^/]+\.sh                       regular file       system_u:object_r:bin_t:s0
+/usr/share/build-1/mkdir\.sh                       regular file       system_u:object_r:bin_t:s0
+/usr/share/cluster/.*\.sh                          all files          system_u:object_r:bin_t:s0
+/usr/share/ifupdown2/__main__\.py                  regular file       system_u:object_r:bin_t:s0
+/usr/share/printconf/util/print\.py                regular file       system_u:object_r:bin_t:s0
+/usr/share/sandbox/sandboxX\.sh                    regular file       system_u:object_r:bin_t:s0
+/usr/share/sectool/.*\.py                          regular file       system_u:object_r:bin_t:s0
+/usr/share/shorewall/compiler\.pl                  regular file       system_u:object_r:bin_t:s0
+/usr/share/system-config-printer/applet\.py        regular file       system_u:object_r:bin_t:s0
+/usr/share/texlive/texmf-dist/scripts/checklistings/checklistings\.sh regular file       system_u:object_r:bin_t:s0
+/usr/share/virtualbox/VBoxCreateUSBNode\.sh        regular file       system_u:object_r:udev_helper_exec_t:s0
+```
+
+Policies:
+
+```bash
+➤ sesearch --allow --source sysadm_t --target bin_t --class file --perm execute,execute_no_trans
+allow sysadm_t bin_t:file { entrypoint execute execute_no_trans getattr ioctl lock map open read };
+➤ sesearch --allow --source portage_t --target bin_t --class file --perm execute,execute_no_trans
+allow portage_t bin_t:file { entrypoint execute getattr ioctl lock map open read relabelfrom relabelto };
+allow portage_t exec_type:file { execute execute_no_trans getattr ioctl lock map open read };
+```
+
+Modify:
+
+```bash
+semanage fcontext -a -f f -s system_u -r s0 -t bin_t "/usr/share/genkernel/[^/]+\.(pl|py|sh)"
+```
+
+Restore:
+
+```bash
+➤ restorecon -RFv /usr/share/genkernel
+Relabeled /usr/share/genkernel/gen_arch.sh from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
+Relabeled /usr/share/genkernel/gen_bootloader.sh from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
+Relabeled /usr/share/genkernel/gen_cmdline.sh from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
+Relabeled /usr/share/genkernel/gen_compile.sh from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
+Relabeled /usr/share/genkernel/gen_configkernel.sh from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
+Relabeled /usr/share/genkernel/gen_determineargs.sh from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
+Relabeled /usr/share/genkernel/gen_funcs.sh from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
+Relabeled /usr/share/genkernel/gen_initramfs.sh from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
+Relabeled /usr/share/genkernel/gen_moddeps.sh from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
+Relabeled /usr/share/genkernel/gen_package.sh from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
+Relabeled /usr/share/genkernel/gen_worker.sh from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
+Relabeled /usr/share/genkernel/merge.pl from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
+Relabeled /usr/share/genkernel/path_expander.py from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
+```
+
 ## Creating SELinux policies
 
 I created a script to simplify policy creation for denials printed out by `dmesg` and `ausearch`. Reboot after `semodule -i ...` and create the next SELinux policy. The script creates the `.te` file in the current directory!
