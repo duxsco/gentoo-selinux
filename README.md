@@ -385,6 +385,51 @@ Relabeled /usr/share/genkernel/merge.pl from system_u:object_r:usr_t:s0 to syste
 Relabeled /usr/share/genkernel/path_expander.py from system_u:object_r:usr_t:s0 to system_u:object_r:bin_t:s0
 ```
 
+#### /var/tmp/genkernel
+
+`ausearch` output:
+
+```
+#----
+#time->Wed May 11 03:36:04 2022
+#type=PROCTITLE msg=audit(1652232964.439:20): proctitle=2F7661722F746D702F67656E6B65726E656C2F676B5F447A76366149394F2F696E697472616D66732D65756465762D74656D702F7573722F62696E2F7564657661646D0068776462002D2D757064617465002D2D726F6F74002F7661722F746D702F67656E6B65726E656C2F676B5F447A76366149394F2F696E697472616D66
+#type=PATH msg=audit(1652232964.439:20): item=0 name="/var/tmp/genkernel/gk_Dzv6aI9O/initramfs-eudev-temp/usr/bin/udevadm" inode=95 dev=00:3a mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=staff_u:object_r:user_tmpfs_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1652232964.439:20): cwd="/var/tmp/genkernel/gk_Dzv6aI9O/initramfs-eudev-temp"
+#type=EXECVE msg=audit(1652232964.439:20): argc=5 a0="/var/tmp/genkernel/gk_Dzv6aI9O/initramfs-eudev-temp/usr/bin/udevadm" a1="hwdb" a2="--update" a3="--root" a4="/var/tmp/genkernel/gk_Dzv6aI9O/initramfs-eudev-temp"
+#type=SYSCALL msg=audit(1652232964.439:20): arch=c000003e syscall=59 success=yes exit=0 a0=561541f8e310 a1=561541f102d0 a2=561541f95450 a3=1b105bdd72f6f962 items=1 ppid=2814 pid=2816 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts0 ses=1 comm="udevadm" exe="/var/tmp/genkernel/gk_Dzv6aI9O/initramfs-eudev-temp/usr/bin/udevadm" subj=staff_u:sysadm_r:sysadm_t:s0-s0:c0.c1023 key=(null)
+#type=AVC msg=audit(1652232964.439:20): avc:  denied  { execute_no_trans } for  pid=2816 comm="genkernel" path="/var/tmp/genkernel/gk_Dzv6aI9O/initramfs-eudev-temp/usr/bin/udevadm" dev="tmpfs" ino=95 scontext=staff_u:sysadm_r:sysadm_t:s0-s0:c0.c1023 tcontext=staff_u:object_r:user_tmpfs_t:s0 tclass=file permissive=1
+#type=AVC msg=audit(1652232964.439:20): avc:  denied  { execute } for  pid=2816 comm="genkernel" name="udevadm" dev="tmpfs" ino=95 scontext=staff_u:sysadm_r:sysadm_t:s0-s0:c0.c1023 tcontext=staff_u:object_r:user_tmpfs_t:s0 tclass=file permissive=1
+```
+
+List file context mapping definitions:
+
+```bash
+➤ semanage fcontext -l | grep "^/var/tmp"
+/var/tmp                                           directory          system_u:object_r:tmp_t:s0
+/var/tmp                                           symbolic link      system_u:object_r:tmp_t:s0
+/var/tmp/.*                                        all files          <<None>>
+/var/tmp/binpkgs(/.*)?                             all files          system_u:object_r:portage_tmp_t:s0
+/var/tmp/emerge-webrsync(/.*)?                     all files          system_u:object_r:portage_tmp_t:s0
+/var/tmp/lost\+found                               directory          system_u:object_r:lost_found_t:s0
+/var/tmp/lost\+found/.*                            all files          <<None>>
+/var/tmp/portage(/.*)?                             all files          system_u:object_r:portage_tmp_t:s0
+/var/tmp/portage-pkg(/.*)?                         all files          system_u:object_r:portage_tmp_t:s0
+/var/tmp/systemd-private-[^/]+                     directory          system_u:object_r:tmp_t:s0
+/var/tmp/systemd-private-[^/]+/tmp                 directory          system_u:object_r:tmp_t:s0
+/var/tmp/systemd-private-[^/]+/tmp/.*              all files          <<None>>
+/var/tmp/vi\.recover                               directory          system_u:object_r:tmp_t:s0
+```
+
+Policies:
+
+```bash
+➤ sesearch --allow --source sysadm_t --class file --perm execute,execute_no_trans | grep tmp
+allow sysadm_t portage_tmp_t:file { execute execute_no_trans getattr ioctl lock map open read };
+allow sysadm_t user_tmp_t:file { append create execute execute_no_trans getattr ioctl link lock map open read rename setattr unlink write };
+```
+
+I updated `/etc/fstab` accordingly ([link](https://github.com/duxsco/gentoo-installation/commit/40fa37a289fb4a77b31502114e33e130c9e03f33)).
+
 ## Creating SELinux policies
 
 I created a script to simplify policy creation for denials printed out by `dmesg` and `ausearch`. Reboot after `semodule -i ...` and create the next SELinux policy. The script creates the `.te` file in the current directory!
