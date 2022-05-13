@@ -19,7 +19,18 @@ Reboot the system.
 
 ### Relabel
 
-Switch to [mcs policy type](https://wiki.gentoo.org/wiki/SELinux/Policy_store#Switching_active_policy_store) and [relabel the entire system](https://wiki.gentoo.org/wiki/SELinux/Installation#Relabel). But, don't forget to mount `/boot` and all `/efi*` first. Make sure to apply the `setfiles` command on `/boot`, `/var/cache/binpkgs`, `/var/cache/distfiles`, `/var/db/repos/gentoo`, `/var/tmp` and all `/efi*`. Make sure to use `mcs`!
+Switch to [mcs policy type](https://wiki.gentoo.org/wiki/SELinux/Policy_store#Switching_active_policy_store).
+
+[Relabel the entire system](https://wiki.gentoo.org/wiki/SELinux/Installation#Relabel):
+
+```bash
+mkdir /mnt/gentoo
+# mount /boot and /efi*, too!
+mount -o bind / /mnt/gentoo
+setfiles -r /mnt/gentoo /etc/selinux/mcs/contexts/files/file_contexts /mnt/gentoo/{dev,home,proc,run,sys,tmp,boot,efi*,var/cache/binpkgs,var/cache/distfiles,var/db/repos/gentoo,var/tmp}
+umount /mnt/gentoo
+rlpkg -a -r
+```
 
 ### Users and services
 
