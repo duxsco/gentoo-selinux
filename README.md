@@ -21,32 +21,23 @@ Reboot the system.
 
 Switch to [mcs policy type](https://wiki.gentoo.org/wiki/SELinux/Policy_store#Switching_active_policy_store) and [relabel the entire system](https://wiki.gentoo.org/wiki/SELinux/Installation#Relabel). But, don't forget to mount `/boot` and all `/efi*` first. Make sure to apply the `setfiles` command on `/boot`, `/var/cache/binpkgs`, `/var/cache/distfiles`, `/var/db/repos/gentoo`, `/var/tmp` and all `/efi*`. Make sure to use `mcs`!
 
-### Users
+### Users and services
 
-Add the initial user to the administration SELinux user, and take care of services:
-- https://wiki.gentoo.org/wiki/SELinux/Installation#Define_the_administrator_accounts
-- https://wiki.gentoo.org/wiki/SELinux/Installation#Supporting_service_administration
-
-In `mcs`, map users to `user_u` by default instead of `unconfined_u`:
+Add the initial user to the [administration SELinux user](https://wiki.gentoo.org/wiki/SELinux/Installation#Define_the_administrator_accounts) and change other SELinux logins:
 
 ```bash
-➤ semanage login -l
-
-Login Name           SELinux User         MLS/MCS Range        Service
-
-__default__          unconfined_u         s0-s0                *
-➤ semanage login -m -s user_u __default__
-➤ semanage login -l
-
-Login Name           SELinux User         MLS/MCS Range        Service
-
-__default__          user_u               s0-s0                *
+semanage login -a -s staff_u david
+semanage login -m -s user_u __default__
+semanage login -a -s root root
+restorecon -RFv /home/david /root
+bash -c 'echo "%wheel ALL=(ALL) TYPE=sysadm_t ROLE=sysadm_r ALL" | EDITOR="tee" visudo -f /etc/sudoers.d/wheel; echo $?'
 ```
 
-Setup `app-admin/sudo`:
+Take care of [services](https://wiki.gentoo.org/wiki/SELinux/Installation#Supporting_service_administration):
 
 ```bash
-bash -c 'echo "%wheel ALL=(ALL) TYPE=sysadm_t ROLE=sysadm_r ALL" | EDITOR="tee" visudo -f /etc/sudoers.d/wheel; echo $?'
+semanage user -m -R "staff_r sysadm_r system_r" root
+semanage user -m -R "staff_r sysadm_r system_r" staff_u
 ```
 
 ### Logging
