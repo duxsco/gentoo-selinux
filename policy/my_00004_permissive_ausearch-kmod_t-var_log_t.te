@@ -1,12 +1,12 @@
 #----
-#time->Sat May 14 01:27:02 2022
-#type=PROCTITLE msg=audit(1652484422.946:20): proctitle=6465706D6F64002D62002F746D702F6465706D6F642E77356A33724C00352E31372E372D67656E746F6F2D7838365F3634
-#type=PATH msg=audit(1652484422.946:20): item=1 name="/lib64/ld-linux-x86-64.so.2" inode=75851 dev=00:1d mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:ld_so_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
-#type=PATH msg=audit(1652484422.946:20): item=0 name="/sbin/depmod" inode=993 dev=00:1d mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:kmod_exec_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
-#type=CWD msg=audit(1652484422.946:20): cwd="/usr/src/linux-5.17.7-gentoo"
-#type=EXECVE msg=audit(1652484422.946:20): argc=4 a0="depmod" a1="-b" a2="/tmp/depmod.w5j3rL" a3="5.17.7-gentoo-x86_64"
-#type=SYSCALL msg=audit(1652484422.946:20): arch=c000003e syscall=59 success=yes exit=0 a0=559b740505f0 a1=559b7404c980 a2=559b7404f7b0 a3=559b7404cf00 items=2 ppid=1289 pid=1293 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts0 ses=1 comm="depmod" exe="/bin/kmod" subj=staff_u:sysadm_r:kmod_t:s0-s0:c0.c1023 key=(null)
-#type=AVC msg=audit(1652484422.946:20): avc:  denied  { append } for  pid=1293 comm="depmod" path="/var/log/genkernel.log" dev="dm-0" ino=213366 scontext=staff_u:sysadm_r:kmod_t:s0-s0:c0.c1023 tcontext=system_u:object_r:var_log_t:s0 tclass=file permissive=1
+#time->Sat May 14 16:28:43 2022
+#type=PROCTITLE msg=audit(1652538523.963:21): proctitle=6465706D6F64002D62002F746D702F6465706D6F642E30304E42367600352E31372E372D67656E746F6F2D7838365F3634
+#type=PATH msg=audit(1652538523.963:21): item=1 name="/lib64/ld-linux-x86-64.so.2" inode=75846 dev=00:1d mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:ld_so_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=PATH msg=audit(1652538523.963:21): item=0 name="/sbin/depmod" inode=996 dev=00:1d mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:kmod_exec_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+#type=CWD msg=audit(1652538523.963:21): cwd="/usr/src/linux-5.17.7-gentoo"
+#type=EXECVE msg=audit(1652538523.963:21): argc=4 a0="depmod" a1="-b" a2="/tmp/depmod.00NB6v" a3="5.17.7-gentoo-x86_64"
+#type=SYSCALL msg=audit(1652538523.963:21): arch=c000003e syscall=59 success=yes exit=0 a0=561efe5975f0 a1=561efe593980 a2=561efe5967b0 a3=561efe593f00 items=2 ppid=2290 pid=2294 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts0 ses=1 comm="depmod" exe="/bin/kmod" subj=staff_u:sysadm_r:kmod_t:s0-s0:c0.c1023 key=(null)
+#type=AVC msg=audit(1652538523.963:21): avc:  denied  { append } for  pid=2294 comm="depmod" path="/var/log/genkernel.log" dev="dm-0" ino=213554 scontext=staff_u:sysadm_r:kmod_t:s0-s0:c0.c1023 tcontext=system_u:object_r:var_log_t:s0 tclass=file permissive=1
 
 policy_module(my_00004_permissive_ausearch-kmod_t-var_log_t, 1.0)
 

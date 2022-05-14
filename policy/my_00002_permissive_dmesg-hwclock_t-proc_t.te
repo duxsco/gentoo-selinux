@@ -1,5 +1,4 @@
-#[   15.773748] audit: type=1400 audit(1652474575.049:3): avc:  denied  { getattr } for  pid=3612 comm="hwclock" name="/" dev="proc" ino=1 scontext=system_u:system_r:hwclock_t:s0 tcontext=system_u:object_r:proc_t:s0 tclass=filesystem permissive=1
-#[   15.778733] audit: type=1400 audit(1652474575.056:4): avc:  denied  { getattr } for  pid=3622 comm="hwclock" name="/" dev="proc" ino=1 scontext=system_u:system_r:hwclock_t:s0 tcontext=system_u:object_r:proc_t:s0 tclass=filesystem permissive=1
+#[   21.594761] audit: type=1400 audit(1652535279.859:3): avc:  denied  { getattr } for  pid=4622 comm="hwclock" name="/" dev="proc" ino=1 scontext=system_u:system_r:hwclock_t:s0 tcontext=system_u:object_r:proc_t:s0 tclass=filesystem permissive=1
 
 policy_module(my_00002_permissive_dmesg-hwclock_t-proc_t, 1.0)
 

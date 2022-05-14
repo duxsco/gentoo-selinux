@@ -1,6 +1,6 @@
-#[   14.933600] audit: type=1400 audit(1652473984.233:3): avc:  denied  { search } for  pid=3024 comm="checkpath" name="kernel" dev="proc" ino=14430 scontext=system_u:system_r:tmpfiles_t:s0 tcontext=system_u:object_r:sysctl_kernel_t:s0 tclass=dir permissive=1
-#[   14.934911] audit: type=1400 audit(1652473984.233:4): avc:  denied  { read } for  pid=3024 comm="checkpath" name="cap_last_cap" dev="proc" ino=18248 scontext=system_u:system_r:tmpfiles_t:s0 tcontext=system_u:object_r:sysctl_kernel_t:s0 tclass=file permissive=1
-#[   14.936216] audit: type=1400 audit(1652473984.233:5): avc:  denied  { open } for  pid=3024 comm="checkpath" path="/proc/sys/kernel/cap_last_cap" dev="proc" ino=18248 scontext=system_u:system_r:tmpfiles_t:s0 tcontext=system_u:object_r:sysctl_kernel_t:s0 tclass=file permissive=1
+#[   21.001295] audit: type=1400 audit(1652534786.213:3): avc:  denied  { search } for  pid=4023 comm="checkpath" name="kernel" dev="proc" ino=13705 scontext=system_u:system_r:tmpfiles_t:s0 tcontext=system_u:object_r:sysctl_kernel_t:s0 tclass=dir permissive=1
+#[   21.002983] audit: type=1400 audit(1652534786.216:4): avc:  denied  { read } for  pid=4023 comm="checkpath" name="cap_last_cap" dev="proc" ino=18695 scontext=system_u:system_r:tmpfiles_t:s0 tcontext=system_u:object_r:sysctl_kernel_t:s0 tclass=file permissive=1
+#[   21.003701] audit: type=1400 audit(1652534786.216:5): avc:  denied  { open } for  pid=4023 comm="checkpath" path="/proc/sys/kernel/cap_last_cap" dev="proc" ino=18695 scontext=system_u:system_r:tmpfiles_t:s0 tcontext=system_u:object_r:sysctl_kernel_t:s0 tclass=file permissive=1
 
 policy_module(my_00000_permissive_dmesg-tmpfiles_t-sysctl_kernel_t, 1.0)
 
