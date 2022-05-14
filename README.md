@@ -17,6 +17,29 @@ Append `lsm=selinux gk.preserverun.disabled=1` to the kernel command line parame
 
 Reboot the system.
 
+### Strict policy type settings
+
+Keep track of `strict` SELinux `login` and `user` settings, because we are going to use them for `mcs`.
+
+```bash
+➤ semanage login -l
+
+Login Name                SELinux User
+
+__default__               user_u
+root                      root
+
+➤ semanage user -l
+SELinux User    SELinux Roles
+
+root            staff_r sysadm_r
+staff_u         staff_r sysadm_r
+sysadm_u        sysadm_r
+system_u        system_r
+unconfined_u    unconfined_r
+user_u          user_r
+```
+
 ### Relabel
 
 Switch to [mcs policy type](https://wiki.gentoo.org/wiki/SELinux/Policy_store#Switching_active_policy_store).
@@ -34,7 +57,29 @@ rlpkg -a -r
 
 ### Users and services
 
-Add the initial user to the [administration SELinux user](https://wiki.gentoo.org/wiki/SELinux/Installation#Define_the_administrator_accounts) and change other SELinux logins:
+Default `mcs` SELinux `login` and `user` settings:
+
+```bash
+➤ semanage login -l
+
+Login Name           SELinux User         MLS/MCS Range        Service
+
+__default__          unconfined_u         s0-s0                *
+
+➤ semanage user -l
+
+                Labeling   MLS/       MLS/
+SELinux User    Prefix     MCS Level  MCS Range                      SELinux Roles
+
+root            sysadm     s0         s0-s0:c0.c1023                 staff_r sysadm_r
+staff_u         staff      s0         s0-s0:c0.c1023                 staff_r sysadm_r
+sysadm_u        sysadm     s0         s0-s0:c0.c1023                 sysadm_r
+system_u        user       s0         s0-s0:c0.c1023                 system_r
+unconfined_u    unconfined s0         s0-s0:c0.c1023                 unconfined_r
+user_u          user       s0         s0                             user_r
+```
+
+Add the initial user to the [administration SELinux user](https://wiki.gentoo.org/wiki/SELinux/Installation#Define_the_administrator_accounts) and change other SELinux logins to have settings close to `strict`:
 
 ```bash
 semanage login -a -s staff_u david
