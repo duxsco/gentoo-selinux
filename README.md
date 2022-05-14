@@ -148,7 +148,7 @@ ssh_port_t                     tcp      50022, 22
 
 ## GnuPG context assignment
 
-Files in `/boot` and `/efi*` required for booting need to be GnuPG signed (expect for Secure Boot signed EFI binary). For SELinux not to complain, the GnuPG homedir is stored in `/etc/gentoo-installation/gnupg`. In the following, a suitable file context is assigned:
+Files in `/boot` and `/efi*` required for booting need to be GnuPG signed (expect for Secure Boot signed EFI binary). The GnuPG homedir is stored in `/etc/gentoo-installation/gnupg`. In the following, a suitable file context is assigned:
 
 ```bash
 ➤ semanage fcontext -l | grep "\\\.gnupg"
@@ -340,7 +340,7 @@ semanage fcontext -a -t initrc_tmp_t "/var/lib/nftables(/[^\.].*)?"
 Restore:
 
 ```bash
-➤ restorecon -R -F -v /var/lib/nftables
+➤ restorecon -RFv /var/lib/nftables
 Relabeled /var/lib/nftables from system_u:object_r:var_lib_t:s0 to system_u:object_r:initrc_tmp_t:s0
 Relabeled /var/lib/nftables/rules-save from system_u:object_r:var_lib_t:s0 to system_u:object_r:initrc_tmp_t:s0
 ```
@@ -397,7 +397,7 @@ allow sysadm_t bin_t:file { entrypoint execute execute_no_trans getattr ioctl lo
 Modify:
 
 ```bash
-semanage fcontext -a -f f -s system_u -r s0 -t bin_t "/usr/share/genkernel/[^/]+\.(pl|py|sh)"
+semanage fcontext -a -f f -t bin_t "/usr/share/genkernel/[^/]+\.(pl|py|sh)"
 ```
 
 Restore:
