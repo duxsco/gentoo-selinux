@@ -473,7 +473,7 @@ I created a script to simplify policy creation for denials printed out by `dmesg
 "my_00001_permissive_dmesg-systemd_tmpfiles_t-self.te" has been created!
 
 Please, check the file, create the policy module and install it:
-make -f /usr/share/selinux/strict/include/Makefile my_00001_permissive_dmesg-systemd_tmpfiles_t-self.pp
+make -f /usr/share/selinux/mcs/include/Makefile my_00001_permissive_dmesg-systemd_tmpfiles_t-self.pp
 semodule -i my_00001_permissive_dmesg-systemd_tmpfiles_t-self.pp
 ```
 
@@ -498,3 +498,7 @@ The policies created with `create_policy.sh` are in the "policy" folder. In addi
 setsebool -P allow_mount_anyfile on
 setsebool -P systemd_tmpfiles_manage_all on
 ```
+
+## Other Gentoo Linux repos
+
+https://github.com/duxsco?tab=repositories&q=gentoo-
