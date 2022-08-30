@@ -1,5 +1,7 @@
 # SELinux rules for my custom Gentoo Linux installation (WIP)
 
+⚠️ This repo has been archived as I am not going to use OpenRC in the future. My work will be put in the use of [SELinux with systemd](https://gentoo.duxsco.de/selinux/). ⚠️
+
 Here, SELinux related changes applied to my [custom Gentoo Linux installation](https://github.com/duxsco/gentoo-installation) are documented.
 
 ## Enable SELinux
